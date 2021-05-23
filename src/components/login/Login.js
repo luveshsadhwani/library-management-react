@@ -21,7 +21,7 @@ function Login({log_details}) {
     if (username==="root" && password==="root"){
 //        authentication.onAuthentication()
         log_details(username);
-        history.push("/sidebar")
+        history.push("/home")
     }else{
       setPassword("")
       setUsername("")
