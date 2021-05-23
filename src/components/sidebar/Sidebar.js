@@ -2,6 +2,7 @@ import React from 'react'
 import './Sidebar.css'
 import { Redirect } from "react-router-dom"
 import { useHistory } from 'react-router-dom';
+import {Link} from "react-router-dom"
 
 function Sidebar({auth_check, user}) {
     let history = useHistory();
@@ -14,15 +15,15 @@ function Sidebar({auth_check, user}) {
         auth_check = true;
         return(
             <div className="wrapper">
-                <div className="sidebar">
+                <div className="sidebar">  
                     <h1>{user}</h1>
                     <ul>
-                        <li><a href="/home"><i className="fas fa-home"></i>Home</a></li>
-                        <li><a href="/home"><i className="fas fa-user"></i>Profile</a></li> 
-                        <li><a href="/home"><i className="fas fa-columns"></i>Dashboard</a></li> 
-                        <li><a href="/home"><i className="fas fa-blog"></i>Events</a></li> 
-                        <li><a href="/home"><i className="fas fa-address-book"></i>Location</a></li> 
-                        <li><i className="fas fa-sign-out-alt" onClick={log_out}></i>Location</li>  
+                        <li><Link to="/home"><i className="fas fa-home"></i>Home</Link></li>
+                        <li><Link to="/home"><i className="fas fa-user"></i>Profile</Link></li> 
+                        <li><Link to="/home"><i className="fas fa-columns"></i>Dashboard</Link></li> 
+                        <li><Link to="/home"><i className="fas fa-blog"></i>Events</Link></li> 
+                        <li><Link to="/home"><i className="fas fa-address-book"></i>Location</Link></li> 
+                        <li><i className="fas fa-sign-out-alt" onClick={log_out}></i>Logout</li>  
                     </ul>
                 <h3>Designed by Ali</h3>    
                 </div>
