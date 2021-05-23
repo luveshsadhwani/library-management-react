@@ -60,6 +60,14 @@
     color: #bdb8d7;
     display: block;
   }
+
+  .wrapper .sidebar ul li i{
+      color:white
+  }
+
+  .wrapper .sidebar ul li{
+      color:#bdb8d7
+  }
   
   .wrapper .sidebar ul li a .fas{
     width: 25px;
