@@ -6,6 +6,7 @@ import Profile from '../../container/Profile'
 import Dashboard from '../../container/Dashboard'
 import Events from '../../container/Events'
 import Location from '../../container/Location'
+import AddEntry from '../../container/AddEntry'
 
 export default function AppNavigator() {
     let match = useRouteMatch().url;
@@ -18,6 +19,7 @@ export default function AppNavigator() {
             <Route path={`${match}/dashboard`} component={Dashboard} exact/>
             <Route path={`${match}/events`} component={Events} exact/>
             <Route path={`${match}/location`} component={Location} exact/>
+            <Route path={`${match}/add`} component={AddEntry} exact/>
         </Switch>
     )
 }
