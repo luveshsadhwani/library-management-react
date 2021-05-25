@@ -23,11 +23,11 @@ function Sidebar({auth_check, user}) {
                         <li><NavLink exact to="/home"><i className="fas fa-home"></i>Home</NavLink></li>
                         <li><NavLink exact to="/home/profile"><i className="fas fa-user"></i>Profile</NavLink></li> 
                         <li><NavLink exact to="/home/dashboard"><i className="fas fa-columns"></i>Dashboard</NavLink></li> 
+                        <li><NavLink exact to="/home/add"><i className="fas fa-columns"></i>Add Entry</NavLink></li> 
                         <li><NavLink exact to="/home/events"><i className="fas fa-blog"></i>Events</NavLink></li> 
                         <li><NavLink exact to="/home/location"><i className="fas fa-address-book"></i>Location</NavLink></li> 
                         <li><i className="fas fa-sign-out-alt" onClick={log_out}></i>Logout</li>   
-                    </ul>
-                <h3>Designed by Ali</h3>    
+                    </ul> 
                 </div>
                 <div className="main_content">
                     {/* <div className="header">Welcome!!</div>
