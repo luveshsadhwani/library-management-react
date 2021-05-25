@@ -1,10 +1,12 @@
 import React, {useState}  from 'react'
 import "./addentry.css"
+import { createStandaloneToast} from "@chakra-ui/react"
 
 // This is where we have out input form 
 
 export default function AddEntry() {
 
+    const toast =  createStandaloneToast()
     const [bookname, setBookname] = useState("")
     const [author, setAuthor] = useState("")
     const [snumber, setSnumber] = useState("")
@@ -17,12 +19,22 @@ export default function AddEntry() {
 
         //// CONNECTION TO THE CUSTOM API GOES HERE USE AXIOS TO SENT POST REQ
 
-        
+
         setBookname('')
         setAuthor('')
         setCond('')
         setSnumber('')
         setIsud('')
+
+        toast({
+            title: "Successfully verified data",
+            description: "Create an api and bind with submit btn",
+            status: "success",
+            variant: "solid",
+            duration: 1500,
+            position: "top-right",
+            isClosable: false,
+          })
       }
 
     return(
