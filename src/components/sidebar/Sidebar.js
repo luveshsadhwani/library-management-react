@@ -26,7 +26,7 @@ function Sidebar({auth_check, user}) {
                         <li><NavLink exact to="/add"><i className="fas fa-columns"></i>Add Entry</NavLink></li> 
                         <li><NavLink exact to="/events"><i className="fas fa-blog"></i>Events</NavLink></li> 
                         <li><NavLink exact to="/location"><i className="fas fa-address-book"></i>Location</NavLink></li> 
-                        <li><i className="fas fa-sign-out-alt" onClick={log_out}></i>Logout</li>   
+                        <li onClick={log_out}><i className="fas fa-sign-out-alt"></i>Logout</li>   
                     </ul> 
                 </div>
                 <div className="main_content">
