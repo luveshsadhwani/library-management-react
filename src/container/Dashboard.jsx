@@ -1,55 +1,63 @@
-import React, {useState, useEffect} from 'react'
-import axios from "axios"
-import {Link} from "react-router-dom"
-import "./customcss/dashboard.css"
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./customcss/dashboard.css";
+
+import SearchBar from "../components/SearchBar/SearchBar";
+import CustomTable from "../components/Table/Table";
 
 export default function Dashboard() {
-    const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([]);
+  const [query, setQuery] = useState("");
+  const [searchCol, setSearchCol] = useState("");
 
-    useEffect(()=>{
-        loaddata()
-    },[])
+  useEffect(() => {
+    loaddata();
+  }, []);
 
-    const loaddata = async()=>{
-        const resultdata = await axios.get("http://localhost:8000/users")
-        setUsers(resultdata.data)
-    }
+  const loaddata = async () => {
+    const resultdata = await axios.get("http://localhost:8000/users");
+    setUsers(resultdata.data);
+  };
 
-    console.log(users)
+  // we chould replace this with a function that extracts the headers from the data
+  const dataHeaders = [
+    {
+      name: "#",
+      prop: "id",
+    },
+    {
+      name: "Name",
+      prop: "name",
+    },
+    {
+      name: "UserName",
+      prop: "username",
+    },
+    {
+      name: "Email",
+      prop: "email",
+    },
+  ];
 
-    return(
-        <div className="py-4 mr2 ml2">
-            <div>
-                <h1 className="center">Welcome to Dashboard</h1>
-            </div>
-            <table className="table table-light table-striped border shadow mt20">
-                <thead className="table table-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">UserName</th>
-                        <th scope="col">Email</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        users.map((user, index)=>(
-                            <tr  key={index}>
-                                <th scope="row">{index+1}</th>
-                                <td>{user.name}</td>
-                                <td>{user.username}</td>
-                                <td>{user.email}</td>
-                                <td>
-                                    <Link className="btn btn-primary mr2" to="/home/dashboard">View</Link>
-                                    <Link className="btn btn-outline-primary mr2" to={`/home/edit/${index+1}`}>Edit</Link>
-                                    <Link className="btn btn-danger mr2" to="/home/dashboard">Delete</Link>
-                                </td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
-        </div>  
-    )
+  return (
+    <div className="py-4 mr2 ml2">
+      <div>
+        <h1 className="center">Welcome to Dashboard</h1>
+      </div>
+      <SearchBar
+        header={dataHeaders}
+        searchCol={searchCol}
+        setSearchCol={setSearchCol}
+        setQuery={setQuery}
+      />
+      <CustomTable
+        data={
+          query && searchCol
+            ? users.filter((d) => d[searchCol].toLowerCase().includes(query))
+            : users
+        }
+        header={dataHeaders}
+      />
+    </div>
+  );
 }
