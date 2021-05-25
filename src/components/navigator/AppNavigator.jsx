@@ -6,7 +6,7 @@ import Profile from '../../container/Profile'
 import Dashboard from '../../container/Dashboard'
 import Events from '../../container/Events'
 import Location from '../../container/Location'
-import AddEntry from '../../container/AddEntry'
+import AddEntry from '../../container/functionalitycomp/AddEntry'
 
 export default function AppNavigator() {
     let match = useRouteMatch().url;
