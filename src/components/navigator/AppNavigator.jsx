@@ -9,19 +9,19 @@ import Location from '../../container/Location'
 import AddEntry from '../../container/functionalitycomp/AddEntry'
 
 export default function AppNavigator() {
-    // let match = useRouteMatch().url;
+    let match = useRouteMatch().url;
+    console.log(match);
     
     return (
         <Switch>
-            <Route path="/home" component={Home} exact/>
-            <Route path="/profile" component={Profile} exact/>
-            <Route path="/dashboard" component={Dashboard} exact/>
-            <Route path="/events" component={Events} exact/>
-            <Route path="/location" component={Location} exact/>
-            <Route path="/add" component={AddEntry} exact/>
-            <Route path="/edit/:id" exact/>
-            <Route path="/view/:id" exact/>
-            <Route path="/delete/:id" exact/>
+            <Route path={`${match}`} component={Home} exact/>
+            <Route path={`${match}/profile`} component={Profile} exact/>
+            <Route path={`${match}/dashboard`} component={Dashboard} exact/>
+            <Route path={`${match}/events`} component={Events} exact/>
+            <Route path={`${match}/location`} component={Location} exact/>
+            <Route path={`${match}/add`} component={AddEntry} exact/>
+            <Route path={`${match}/edit/:id`} exact/>
+            <Route path={`${match}/view/:id`} exact/>
         </Switch>
     )
 }
