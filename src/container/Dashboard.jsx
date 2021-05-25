@@ -41,9 +41,9 @@ export default function Dashboard() {
                                 <td>{user.username}</td>
                                 <td>{user.email}</td>
                                 <td>
-                                    <Link className="btn btn-primary mr2">View</Link>
-                                    <Link className="btn btn-outline-primary mr2">Edit</Link>
-                                    <Link className="btn btn-danger mr2">Delete</Link>
+                                    <Link className="btn btn-primary mr2" to="/home/dashboard">View</Link>
+                                    <Link className="btn btn-outline-primary mr2" to={`/home/edit/${index+1}`}>Edit</Link>
+                                    <Link className="btn btn-danger mr2" to="/home/dashboard">Delete</Link>
                                 </td>
                             </tr>
                         ))
