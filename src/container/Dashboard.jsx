@@ -35,7 +35,7 @@ export default function Dashboard() {
                 <tbody>
                     {
                         users.map((user, index)=>(
-                            <tr>
+                            <tr  key={index}>
                                 <th scope="row">{index+1}</th>
                                 <td>{user.name}</td>
                                 <td>{user.username}</td>
