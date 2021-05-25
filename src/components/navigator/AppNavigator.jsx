@@ -20,6 +20,8 @@ export default function AppNavigator() {
             <Route path={`${match}/events`} component={Events} exact/>
             <Route path={`${match}/location`} component={Location} exact/>
             <Route path={`${match}/add`} component={AddEntry} exact/>
+            <Route path={`${match}/edit/:id`} exact/>
+            <Route path={`${match}/view/:id`} exact/>
         </Switch>
     )
 }
