@@ -22,9 +22,6 @@ export default function Dashboard() {
             <div>
                 <h1 className="center">Welcome to Dashboard</h1>
             </div>
-            <div>
-                <button className="btn btn-outline-primary">Add Entry</button>
-            </div>
             <table className="table table-light table-striped border shadow mt20">
                 <thead className="table table-dark">
                     <tr>
