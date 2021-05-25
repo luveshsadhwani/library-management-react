@@ -41,9 +41,9 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
-          <Route path="/login" exact render={()=><Login log_details={funclogin}/>}/>
+          <Route path="/" exact render={()=><Login log_details={funclogin}/>}/>
           <Route path="/about" exact component={About}/>
-          <Route path="/" render={()=><Sidebar auth_check={localStorage.getItem('auth')} user={localStorage.getItem('user')}/>}/>
+          <Route path="/home" render={()=><Sidebar auth_check={localStorage.getItem('auth')} user={localStorage.getItem('user')}/>}/>
           <Route component={NotFound}/>
           </Switch>  
       </div>
