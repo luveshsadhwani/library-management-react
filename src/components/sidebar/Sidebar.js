@@ -10,7 +10,7 @@ function Sidebar({auth_check, user}) {
     let history = useHistory();
     function log_out(){
         localStorage.clear()
-        history.push("/")
+        history.push("/login")
     }
     console.log(`auth check is ${auth_check}`)
     if(auth_check){
@@ -21,11 +21,11 @@ function Sidebar({auth_check, user}) {
                     <h1>{user}</h1>
                     <ul>
                         <li><NavLink exact to="/home"><i className="fas fa-home"></i>Home</NavLink></li>
-                        <li><NavLink exact to="/home/profile"><i className="fas fa-user"></i>Profile</NavLink></li> 
-                        <li><NavLink exact to="/home/dashboard"><i className="fas fa-columns"></i>Dashboard</NavLink></li> 
-                        <li><NavLink exact to="/home/add"><i className="fas fa-columns"></i>Add Entry</NavLink></li> 
-                        <li><NavLink exact to="/home/events"><i className="fas fa-blog"></i>Events</NavLink></li> 
-                        <li><NavLink exact to="/home/location"><i className="fas fa-address-book"></i>Location</NavLink></li> 
+                        <li><NavLink exact to="/profile"><i className="fas fa-user"></i>Profile</NavLink></li> 
+                        <li><NavLink exact to="/dashboard"><i className="fas fa-columns"></i>Dashboard</NavLink></li> 
+                        <li><NavLink exact to="/add"><i className="fas fa-columns"></i>Add Entry</NavLink></li> 
+                        <li><NavLink exact to="/events"><i className="fas fa-blog"></i>Events</NavLink></li> 
+                        <li><NavLink exact to="/location"><i className="fas fa-address-book"></i>Location</NavLink></li> 
                         <li><i className="fas fa-sign-out-alt" onClick={log_out}></i>Logout</li>   
                     </ul> 
                 </div>
