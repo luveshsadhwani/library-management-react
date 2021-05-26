@@ -15,15 +15,19 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 
+import "./table.css"
+
+/// NEW ROUTING RIGHT HERE
+
 const Buttons = ({ id }) => (
   <TableCell key={`btns-${id}`}>
-    <Link className="btn btn-primary mr2" to="/home/dashboard">
+    <Link className="btn btn-primary mr2 mt2" to={`/home/view/${id}`}>
       <VisibilityIcon />
     </Link>
-    <Link className="btn btn-outline-primary mr2" to={`/home/edit/${id}`}>
+    <Link className="btn btn-outline-primary mr2 mt2" to={`/home/edit/${id}`}>
       <EditIcon />
     </Link>
-    <Link className="btn btn-danger mr2" to="/home/dashboard">
+    <Link className="btn btn-danger mr2 mt2" to="/home/dashboard">
       <DeleteOutlineIcon />
     </Link>
   </TableCell>
