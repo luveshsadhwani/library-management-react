@@ -8,20 +8,23 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import "../../container/customcss/dashboard.css";
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 const Buttons = ({ id }) => (
   <TableCell key={`btns-${id}`}>
     <Link className="btn btn-primary mr2" to="/home/dashboard">
-      View
+      <VisibilityIcon/>
     </Link>
     <Link
       className="btn btn-outline-primary mr2"
       to={`/home/edit/${id}`}
     >
-      Edit
+      <EditIcon/>
     </Link>
     <Link className="btn btn-danger mr2" to="/home/dashboard">
-      Delete
+      <DeleteOutlineIcon/>
     </Link>
   </TableCell>
 );
