@@ -6,7 +6,7 @@ import SearchBar from "../components/SearchBar/SearchBar";
 import CustomTable from "../components/Table/Table";
 
 export default function Dashboard() {
-  const [users, setUsers] = useState([]);
+  const [books, setBooks] = useState([]);
   const [query, setQuery] = useState("");
   const [searchCol, setSearchCol] = useState("");
 
@@ -15,8 +15,8 @@ export default function Dashboard() {
   }, []);
 
   const loaddata = async () => {
-    const resultdata = await axios.get("http://localhost:8000/users");
-    setUsers(resultdata.data);
+    const resultdata = await axios.get("http://localhost:8000/books");
+    setBooks(resultdata.data);
   };
 
   // we chould replace this with a function that extracts the headers from the data
@@ -26,16 +26,24 @@ export default function Dashboard() {
       prop: "id",
     },
     {
-      name: "Name",
-      prop: "name",
+      name: "Author",
+      prop: "authorname",
     },
     {
-      name: "UserName",
-      prop: "username",
+      name: "Title",
+      prop: "booktitle",
     },
     {
-      name: "Email",
-      prop: "email",
+      name: "Subject",
+      prop: "Subject",
+    },
+    {
+      name: "Publisher",
+      prop: "Publisher",
+    },
+    {
+      name: "ISBN",
+      prop: "Isbn",
     },
   ];
 
@@ -53,8 +61,8 @@ export default function Dashboard() {
       <CustomTable
         data={
           query && searchCol
-            ? users.filter((d) => d[searchCol].toLowerCase().includes(query))
-            : users
+            ? books.filter((d) => d[searchCol].toLowerCase().includes(query))
+            : books
         }
         header={dataHeaders}
       />
