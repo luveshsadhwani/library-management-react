@@ -9,14 +9,14 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import "../../container/customcss/dashboard.css";
 
-const Buttons = ({ index }) => (
-  <TableCell key={`btns-${index}`}>
+const Buttons = ({ id }) => (
+  <TableCell key={`btns-${id}`}>
     <Link className="btn btn-primary mr2" to="/home/dashboard">
       View
     </Link>
     <Link
       className="btn btn-outline-primary mr2"
-      to={`/home/edit/${index + 1}`}
+      to={`/home/edit/${id}`}
     >
       Edit
     </Link>
@@ -26,14 +26,18 @@ const Buttons = ({ index }) => (
   </TableCell>
 );
 
-const customRow = (d, i, header) => (
-  <TableRow key={`row-${i}`}>
-    {header.map((s, k) => (
-      <TableCell key={`row-${k}`}>{d[s.prop]}</TableCell>
-    ))}
-    <Buttons index={i}/>
-  </TableRow>
-);
+const customRow = (d, i, header) => {
+  const rowId = d["id"];
+  console.log(rowId);
+  return (
+    <TableRow key={`row-${i}`}>
+      {header.map((s, k) => (
+        <TableCell key={`row-${k}`}>{d[s.prop]}</TableCell>
+      ))}
+      <Buttons id={rowId} />
+    </TableRow>
+  );
+};
 
 export default function CustomTable({ data, header }) {
   console.log(data);
