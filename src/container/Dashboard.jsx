@@ -14,9 +14,10 @@ export default function Dashboard() {
     loaddata();
   }, []);
 
+  // Requset to api
   const loaddata = async () => {
     const resultdata = await axios.get("http://localhost:8000/books");
-    setBooks(resultdata.data);
+    setBooks(resultdata.data.reverse());
   };
 
   // we chould replace this with a function that extracts the headers from the data
@@ -51,6 +52,7 @@ export default function Dashboard() {
     <div className="py-4 mr2 ml2">
       <div>
         <h1 className="center">Welcome to Dashboard</h1>
+        <h3 className="center">{`Total Entities ${books.length}`}</h3>
       </div>
       <SearchBar
         header={dataHeaders}
