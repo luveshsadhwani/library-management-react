@@ -1,30 +1,43 @@
 import React, {useState}  from 'react'
 import "./addentry.css"
 import { createStandaloneToast} from "@chakra-ui/react"
+import axios from "axios"
 
 // This is where we have out input form 
+
+
 
 export default function AddEntry() {
 
     const toast =  createStandaloneToast()
     const [bookname, setBookname] = useState("")
     const [author, setAuthor] = useState("")
-    const [snumber, setSnumber] = useState("")
-    const [cond, setCond] = useState("")
-    const [isud, setIsud] = useState("")
+    const [isbnnumber, setIsbnumber] = useState("")
+    const [publisher, setPublisher] = useState("")
+    const [subject, setSubject] = useState("")
 
 
-    const submit_entry = (e)=>{
+    const submit_entry = async (e)=>{
         e.preventDefault()
 
         //// CONNECTION TO THE CUSTOM API GOES HERE USE AXIOS TO SENT POST REQ
+        let datatosend={
+            "authorname":author,
+            "booktitle":bookname,
+            "Subject":subject,
+            "Publisher":publisher,
+            "Isbn":isbnnumber
+        }
 
+        console.log(datatosend)
 
         setBookname('')
         setAuthor('')
-        setCond('')
-        setSnumber('')
-        setIsud('')
+        setIsbnumber('')
+        setPublisher('')
+        setSubject('')
+        
+        await axios.post('http://localhost:8000/books', datatosend)
 
         toast({
             title: "Successfully verified data",
@@ -54,16 +67,16 @@ export default function AddEntry() {
                                     <input value={author} placeholder="Enter Author Name" onChange={(e)=>{setAuthor(e.target.value)}}  required/>
                                 </div>
                                 <div className="entry-box">
-                                    <span className="details">Serial Number</span>
-                                    <input value={snumber} placeholder="Enter Serial Number" onChange={(e)=>{setSnumber(e.target.value)}}  required/>
+                                    <span className="details">Isbn Number</span>
+                                    <input value={isbnnumber} placeholder="Enter Isbn Number" onChange={(e)=>{setIsbnumber(e.target.value)}}  required/>
                                 </div>
                                 <div className="entry-box">
-                                    <span className="details">Condition</span>
-                                    <input value={cond} placeholder="Enter Condition" onChange={(e)=>{setCond(e.target.value)}}  required/>
+                                    <span className="details">Publisher</span>
+                                    <input value={publisher} placeholder="Enter Publisher" onChange={(e)=>{setPublisher(e.target.value)}}  required/>
                                 </div>
                                 <div className="entry-box">
-                                    <span className="details">Issued</span>
-                                    <input value={isud} placeholder="Enter issue status" onChange={(e)=>{setIsud(e.target.value)}}  required/>
+                                    <span className="details">Subject</span>
+                                    <input value={subject} placeholder="Enter Publisher" onChange={(e)=>{setSubject(e.target.value)}}  required/>
                                 </div>
                             </div>
                             <div className="button">
