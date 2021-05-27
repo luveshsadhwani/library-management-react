@@ -7,6 +7,8 @@ import Dashboard from '../../container/Dashboard'
 import Events from '../../container/Events'
 import Location from '../../container/Location'
 import AddEntry from '../../container/functionalitycomp/AddEntry'
+import Edit from "../Edit/Edit"
+import View from "../View/View"
 
 export default function AppNavigator() {
     let match = useRouteMatch().url;
@@ -20,8 +22,8 @@ export default function AppNavigator() {
             <Route path={`${match}/events`} component={Events} exact/>
             <Route path={`${match}/location`} component={Location} exact/>
             <Route path={`${match}/add`} component={AddEntry} exact/>
-            <Route path={`${match}/edit/:id`} exact/>
-            <Route path={`${match}/view/:id`} exact/>
+            <Route path={`${match}/edit/:id`} component={Edit} exact/>
+            <Route path={`${match}/view/:id`} component={View} exact/>
         </Switch>
     )
 }
