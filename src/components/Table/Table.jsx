@@ -16,8 +16,14 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 
 import "./table.css"
+import axios from "axios";
 
 /// NEW ROUTING RIGHT HERE
+
+const deletebook=async(id)=>{
+  await axios.delete(`http://localhost:8000/books/${id}`);
+  window.location.reload();
+}
 
 const Buttons = ({ id }) => (
   <TableCell key={`btns-${id}`}>
@@ -27,9 +33,9 @@ const Buttons = ({ id }) => (
     <Link className="btn btn-outline-primary mr2 mt2" to={`/home/edit/${id}`}>
       <EditIcon />
     </Link>
-    <Link className="btn btn-danger mr2 mt2" to="/home/dashboard">
+    <button className="btn btn-danger mr2 mt2" to="/home/dashboard" onClick={()=>deletebook(id)}>
       <DeleteOutlineIcon />
-    </Link>
+    </button>
   </TableCell>
 );
 
