@@ -52,7 +52,6 @@ export default function Dashboard() {
     },
   ];
 
-  console.log(data);
 
   return (
     <div className="py-4 mr2 ml2">
