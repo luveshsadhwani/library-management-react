@@ -6,18 +6,22 @@ import SearchBar from "../components/SearchBar/SearchBar";
 import CustomTable from "../components/Table/Table";
 
 export default function Dashboard() {
-  const [books, setBooks] = useState([]);
+  const [data, setData] = useState([]);
   const [query, setQuery] = useState("");
-  const [searchCol, setSearchCol] = useState("");
+  const [searchFilter, setSearchFilter] = useState("");
 
   useEffect(() => {
     loaddata();
   }, []);
 
+  const handleChangeFilter = (filter) => setSearchFilter(filter);
+
+  const handleSubmitQuery = (querySubmit) => setQuery(querySubmit);
+
   // Requset to api
   const loaddata = async () => {
     const resultdata = await axios.get("http://localhost:8000/books");
-    setBooks(resultdata.data.reverse());
+    setData(resultdata.data.reverse());
   };
 
   // we chould replace this with a function that extracts the headers from the data
@@ -48,23 +52,25 @@ export default function Dashboard() {
     },
   ];
 
+  console.log(data);
+
   return (
     <div className="py-4 mr2 ml2">
       <div>
         <h1 className="center">Welcome to Dashboard</h1>
-        <h3 className="center">{`Total Entities ${books.length}`}</h3>
+        <h3 className="center">{`Total Entities ${data.length}`}</h3>
       </div>
       <SearchBar
-        header={dataHeaders}
-        searchCol={searchCol}
-        setSearchCol={setSearchCol}
-        setQuery={setQuery}
+        filterOptions={dataHeaders}
+        searchFilter={searchFilter}
+        handleChangeFilter={handleChangeFilter}
+        onSubmit={handleSubmitQuery}
       />
       <CustomTable
         data={
-          query && searchCol
-            ? books.filter((d) => d[searchCol].toLowerCase().includes(query))
-            : books
+          query && searchFilter
+            ? data.filter((d) => d[searchFilter].toLowerCase().includes(query))
+            : data
         }
         header={dataHeaders}
       />

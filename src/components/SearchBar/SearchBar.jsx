@@ -1,38 +1,35 @@
-import React, { useRef } from "react";
-import {
-  Grid,
-  TextField,
-  Select,
-  MenuItem,
-  IconButton,
-} from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
+import React, { useState } from "react";
+import { Grid } from "@material-ui/core";
+
+import SearchButton from "./SearchButton";
+import SearchInput from "./SearchInput";
+import SearchFilter from "./SearchFilter";
 
 export default function SearchBar(props) {
-  const { header } = props;
-  const searchRef = useRef();
-  const handleQuery = () => props.setQuery(searchRef.current.value.toLowerCase());
-  const handleChangeCol = (e) => props.setSearchCol(e.target.value);
+  const { filterOptions, searchFilter, handleChangeFilter, onSubmit } = props;
+
+  const [searchInput, setSearchInput] = useState("");
+
+  const handleSubmit = () => onSubmit(searchInput.toLowerCase());
+
+  const handleChangeQuery = (e) => setSearchInput(e.target.value);
+
 
   return (
     <div>
       <Grid container spacing={1} alignItems="flex-end">
         <Grid item>
-          <IconButton onClick={handleQuery}>
-            <SearchIcon />
-          </IconButton>
+          <SearchButton handleSubmit={handleSubmit} />
         </Grid>
         <Grid item>
-          <TextField id="search-bar" label="Search" inputRef={searchRef}/>
+          <SearchInput handleChangeQuery={handleChangeQuery} />
         </Grid>
         <Grid item>
-          <Select value={props.searchCol} onChange={handleChangeCol}>
-            {header.slice(1).map((d, i) => (
-              <MenuItem key={i} value={d.prop}>
-                {d.name}
-              </MenuItem>
-            ))}
-          </Select>
+          <SearchFilter
+            searchFilter={searchFilter}
+            filterOptions={filterOptions}
+            handleChangeFilter={handleChangeFilter}
+          />
         </Grid>
       </Grid>
     </div>
