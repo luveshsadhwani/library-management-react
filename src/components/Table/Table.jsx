@@ -25,9 +25,9 @@ const deletebook=async(id)=>{
   window.location.reload();
 }
 
-const Buttons = ({ id }) => (
+const Buttons = ({ id,isbn }) => (
   <TableCell key={`btns-${id}`}>
-    <Link className="btn btn-primary mr2 mt2" to={`/home/view/${id}`}>
+    <Link className="btn btn-primary mr2 mt2" to={`/home/view/${isbn}`}>
       <VisibilityIcon />
     </Link>
     <Link className="btn btn-outline-primary mr2 mt2" to={`/home/edit/${id}`}>
@@ -40,13 +40,14 @@ const Buttons = ({ id }) => (
 );
 
 const customRow = (d, i, header) => {
-  const rowId = d["id"];
+  const rowId = d["id"]
+  const isbn = d['Isbn'];
   return (
     <TableRow key={`row-${i}`}>
       {header.map((s, k) => (
         <TableCell key={`row-${k}`}>{d[s.prop]}</TableCell>
       ))}
-      <Buttons id={rowId} />
+      <Buttons id={rowId} isbn={isbn}/>
     </TableRow>
   );
 };
