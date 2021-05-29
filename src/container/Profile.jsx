@@ -140,12 +140,11 @@ const UserInfoGridItem = (formState, propt, index) => {
 
 export default function Profile() {
   const [isForm, setIsForm] = useState(false);
-
-  // ADD AJAX CALLS HERE IN A USE EFFECT HOOK
-  
-  const handleEdit = () => setIsForm(true);
-
   const [formInput, setFormInput] = useState(user);
+
+  // ADD AJAX CALLS HERE IN A USE EFFECT HOOK, use api call to update formInput as the user info, once it works replace the initial state of form info with a blank string 
+
+  const handleEdit = () => setIsForm(true);
 
   const handleChange = (e) => {
     const value = e.target.value;
