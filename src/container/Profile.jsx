@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Grid,
   Paper,
@@ -7,6 +7,8 @@ import {
   createMuiTheme,
   MuiThemeProvider,
   makeStyles,
+  TextField,
+  Button,
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 
@@ -66,9 +68,54 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
     },
   },
+  form: {
+    backgroundColor: "white",
+    color: "#594f8d ",
+    padding: "1em",
+    width: "60%",
+    [theme.breakpoints.down(1200)]: {
+      width: "70%",
+    },
+    [theme.breakpoints.down(1000)]: {
+      width: "80%",
+    },
+    [theme.breakpoints.down(900)]: {
+      width: "90%",
+    },
+    [theme.breakpoints.down(800)]: {
+      width: "100%",
+    },
+  },
 }));
 
-const UserInfoGridItem = (propt, index) => {
+const UserInfoFormItem = (formState, onChange, propt, index) => {
+  const classes = useStyles();
+  return (
+    <Grid
+      item
+      xs={6}
+      key={`display-${index}`}
+      container
+      direction="column"
+      alignItems="center"
+    >
+      <Paper className={classes.form}>
+        <Grid item xs={12}>
+          <Typography variant="subtitle1">{mapInformation[propt]}</Typography>
+        </Grid>
+        <Grid item xs={12} align="center">
+          <TextField
+            defaultValue={formState[propt]}
+            name={Object.keys(user)[index]}
+            onChange={onChange}
+          />
+        </Grid>
+      </Paper>
+    </Grid>
+  );
+};
+
+const UserInfoGridItem = (formState, propt, index) => {
   const classes = useStyles();
   return (
     <Grid
@@ -84,7 +131,7 @@ const UserInfoGridItem = (propt, index) => {
           <Typography variant="subtitle1">{mapInformation[propt]}</Typography>
         </Grid>
         <Grid item xs={12} align="center">
-          <Typography variant="h6">{user[propt]}</Typography>
+          <Typography variant="h6">{formState[propt]}</Typography>
         </Grid>
       </Paper>
     </Grid>
@@ -92,6 +139,39 @@ const UserInfoGridItem = (propt, index) => {
 };
 
 export default function Profile() {
+  const [isForm, setIsForm] = useState(false);
+
+  // ADD AJAX CALLS HERE IN A USE EFFECT HOOK
+  
+  const handleEdit = () => setIsForm(true);
+
+  const [formInput, setFormInput] = useState(user);
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setFormInput((prev) => ({
+      ...prev,
+      [e.target.name]: value,
+    }));
+  };
+
+  const handleSubmit = () => {
+    setFormInput(formInput);
+    setIsForm(false);
+  };
+
+  const toggleRender = () => {
+    if (isForm) {
+      return Object.keys(user).map((key, index) =>
+        UserInfoFormItem(formInput, handleChange, key, index)
+      );
+    }
+
+    return Object.keys(user).map((key, index) =>
+      UserInfoGridItem(formInput, key, index)
+    );
+  };
+
   return (
     <div>
       <MuiThemeProvider theme={theme}>
@@ -108,7 +188,8 @@ export default function Profile() {
               <Grid item xs={12} container alignItems="flex-end">
                 <Typography variant="h4">{`${user.firstName}`}</Typography>
                 <IconButton
-                  style={{ backgroundColor: "#594f8d", marginLeft: '1rem' }}
+                  style={{ backgroundColor: "#594f8d", marginLeft: "1rem" }}
+                  onClick={handleEdit}
                 >
                   <EditIcon style={{ color: "white" }} />
                 </IconButton>
@@ -118,7 +199,19 @@ export default function Profile() {
               </Grid>
             </Grid>
           </Grid>
-          {Object.keys(user).map((key, index) => UserInfoGridItem(key, index))}
+          {toggleRender()}
+          <Grid item xs={12} align="center">
+            {!isForm ? (
+              <div></div>
+            ) : (
+              <Button
+                style={{ color: "white", backgroundColor: "#594f8d" }}
+                onClick={handleSubmit}
+              >
+                SAVE
+              </Button>
+            )}
+          </Grid>
         </Grid>
       </MuiThemeProvider>
     </div>
