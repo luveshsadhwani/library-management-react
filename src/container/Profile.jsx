@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UserInfoFormItem = (formState, onChange, propt, index) => {
+const UserInfoFormItem = (userInfo, onChange, propt, index) => {
   const classes = useStyles();
   return (
     <Grid
@@ -105,7 +105,7 @@ const UserInfoFormItem = (formState, onChange, propt, index) => {
         </Grid>
         <Grid item xs={12} align="center">
           <TextField
-            defaultValue={formState[propt]}
+            defaultValue={userInfo[propt]}
             name={Object.keys(user)[index]}
             onChange={onChange}
           />
@@ -115,7 +115,7 @@ const UserInfoFormItem = (formState, onChange, propt, index) => {
   );
 };
 
-const UserInfoGridItem = (formState, propt, index) => {
+const UserInfoContentItem = (userInfo, propt, index) => {
   const classes = useStyles();
   return (
     <Grid
@@ -131,88 +131,86 @@ const UserInfoGridItem = (formState, propt, index) => {
           <Typography variant="subtitle1">{mapInformation[propt]}</Typography>
         </Grid>
         <Grid item xs={12} align="center">
-          <Typography variant="h6">{formState[propt]}</Typography>
+          <Typography variant="h6">{userInfo[propt]}</Typography>
         </Grid>
       </Paper>
     </Grid>
   );
 };
 
+const ProfileHeader = ({ userInfo, handleEdit }) => {
+  return (
+    <Grid item xs={12} container spacing={2}>
+      <Grid item sm={6} md={4} align="right">
+        <Paper style={{ border: "2px solid", height: "200px", width: "200px" }}>
+          Profile Picture
+        </Paper>
+      </Grid>
+      <Grid item sm={6} md={8} alignt="left" container>
+        <Grid item xs={12} container alignItems="flex-end">
+          <Typography variant="h4">{userInfo.firstName}</Typography>
+          <IconButton
+            style={{ backgroundColor: "#594f8d", marginLeft: "1rem" }}
+            onClick={handleEdit}
+          >
+            <EditIcon style={{ color: "white" }} />
+          </IconButton>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h4">{userInfo.lastName}</Typography>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+};
+
 export default function Profile() {
-  const [isForm, setIsForm] = useState(false);
-  const [formInput, setFormInput] = useState(user);
+  const [formView, setFormView] = useState(false);
+  const [userInfo, setUserInfo] = useState(user);
 
-  // ADD AJAX CALLS HERE IN A USE EFFECT HOOK, use api call to update formInput as the user info, once it works replace the initial state of form info with a blank string 
+  // ADD AJAX CALLS HERE IN A USE EFFECT HOOK, use api call to update userInfo, once it works replace the initial state of userInfo with a blank string
 
-  const handleEdit = () => setIsForm(true);
+  const handleEdit = () => setFormView(true);
 
   const handleChange = (e) => {
     const value = e.target.value;
-    setFormInput((prev) => ({
+    setUserInfo((prev) => ({
       ...prev,
       [e.target.name]: value,
     }));
   };
 
   const handleSubmit = () => {
-    setFormInput(formInput);
-    setIsForm(false);
+    setUserInfo(userInfo);
+    setFormView(false);
   };
 
-  const toggleRender = () => {
-    if (isForm) {
-      return Object.keys(user).map((key, index) =>
-        UserInfoFormItem(formInput, handleChange, key, index)
-      );
-    }
-
-    return Object.keys(user).map((key, index) =>
-      UserInfoGridItem(formInput, key, index)
-    );
+  const toggleRenderForm = () => {
+    return formView
+      ? Object.keys(user).map((key, index) =>
+          UserInfoFormItem(userInfo, handleChange, key, index)
+        )
+      : Object.keys(user).map((key, index) =>
+          UserInfoContentItem(userInfo, key, index)
+        );
   };
 
   return (
-    <div>
-      <MuiThemeProvider theme={theme}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} container spacing={2}>
-            <Grid item sm={6} md={4} align="right">
-              <Paper
-                style={{ border: "2px solid", height: "200px", width: "200px" }}
-              >
-                Profile Picture
-              </Paper>
-            </Grid>
-            <Grid item sm={6} md={8} alignt="left" container>
-              <Grid item xs={12} container alignItems="flex-end">
-                <Typography variant="h4">{`${user.firstName}`}</Typography>
-                <IconButton
-                  style={{ backgroundColor: "#594f8d", marginLeft: "1rem" }}
-                  onClick={handleEdit}
-                >
-                  <EditIcon style={{ color: "white" }} />
-                </IconButton>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="h4">{`${user.lastName}`}</Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          {toggleRender()}
-          <Grid item xs={12} align="center">
-            {!isForm ? (
-              <div></div>
-            ) : (
-              <Button
-                style={{ color: "white", backgroundColor: "#594f8d" }}
-                onClick={handleSubmit}
-              >
-                SAVE
-              </Button>
-            )}
-          </Grid>
+    <MuiThemeProvider theme={theme}>
+      <Grid container spacing={2}>
+        <ProfileHeader userInfo={userInfo} handleEdit={handleEdit} />
+        {toggleRenderForm()}
+        <Grid item xs={12} align="center">
+          {formView && (
+            <Button
+              style={{ color: "white", backgroundColor: "#594f8d" }}
+              onClick={handleSubmit}
+            >
+              SAVE
+            </Button>
+          )}
         </Grid>
-      </MuiThemeProvider>
-    </div>
+      </Grid>
+    </MuiThemeProvider>
   );
 }
