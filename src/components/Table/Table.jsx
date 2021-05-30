@@ -15,17 +15,17 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 
-import "./table.css"
+import "./table.css";
 import axios from "axios";
 
 /// NEW ROUTING RIGHT HERE
 
-const deletebook=async(id)=>{
+const deletebook = async (id) => {
   await axios.delete(`http://localhost:8000/books/${id}`);
   window.location.reload();
-}
+};
 
-const Buttons = ({ id,isbn }) => (
+const Buttons = ({ id, isbn }) => (
   <TableCell key={`btns-${id}`}>
     <Link className="btn btn-primary mr2 mt2" to={`/home/view/${isbn}`}>
       <VisibilityIcon />
@@ -33,21 +33,25 @@ const Buttons = ({ id,isbn }) => (
     <Link className="btn btn-outline-primary mr2 mt2" to={`/home/edit/${id}`}>
       <EditIcon />
     </Link>
-    <button className="btn btn-danger mr2 mt2" to="/home/dashboard" onClick={()=>deletebook(id)}>
+    <button
+      className="btn btn-danger mr2 mt2"
+      to="/home/dashboard"
+      onClick={() => deletebook(id)}
+    >
       <DeleteOutlineIcon />
     </button>
   </TableCell>
 );
 
 const customRow = (d, i, header) => {
-  const rowId = d["id"]
-  const isbn = d['Isbn'];
+  const rowId = d["id"];
+  const isbn = d["Isbn"];
   return (
     <TableRow key={`row-${i}`}>
       {header.map((s, k) => (
         <TableCell key={`row-${k}`}>{d[s.prop]}</TableCell>
       ))}
-      <Buttons id={rowId} isbn={isbn}/>
+      <Buttons id={rowId} isbn={isbn} />
     </TableRow>
   );
 };
@@ -87,17 +91,13 @@ export default function CustomTable({ data, header }) {
             </TableRow>
           )}
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            <CustomTablePagination
-              page={page}
-              setPage={setPage}
-              rowsPerPage={rowsPerPage}
-              setRowsPerPage={setRowsPerPage}
-              count={count}
-            />
-          </TableRow>
-        </TableFooter>
+        <CustomTablePagination
+          page={page}
+          setPage={setPage}
+          rowsPerPage={rowsPerPage}
+          setRowsPerPage={setRowsPerPage}
+          count={count}
+        />
       </Table>
     </TableContainer>
   );
