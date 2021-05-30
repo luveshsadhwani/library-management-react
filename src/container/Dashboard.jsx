@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, cloneElement } from "react";
 import axios from "axios";
 import "./customcss/dashboard.css";
 
 import SearchBar from "../components/SearchBar/SearchBar";
-import CustomTable from "../components/Table/Table";
+import Table1 from "../components/Table/Table1";
+
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import EditIcon from "@material-ui/icons/Edit";
+
+import { Link } from "react-router-dom";
 
 export default function Dashboard() {
   const [data, setData] = useState([]);
@@ -52,7 +58,6 @@ export default function Dashboard() {
     },
   ];
 
-
   return (
     <div className="py-4 mr2 ml2">
       <div>
@@ -65,13 +70,16 @@ export default function Dashboard() {
         handleChangeFilter={handleChangeFilter}
         onSubmit={handleSubmitQuery}
       />
-      <CustomTable
+      <Table1
         data={
           query && searchFilter
             ? data.filter((d) => d[searchFilter].toLowerCase().includes(query))
             : data
         }
-        header={dataHeaders}
+        headers={dataHeaders}
+        customHeader={{ name: "Actions", prop: "actions" }}
+        pagination
+        actionButtons
       />
     </div>
   );
