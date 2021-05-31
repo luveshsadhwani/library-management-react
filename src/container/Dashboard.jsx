@@ -1,15 +1,10 @@
-import React, { useState, useEffect, cloneElement } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./customcss/dashboard.css";
 
 import SearchBar from "../components/SearchBar/SearchBar";
 import Table1 from "../components/Table/Table1";
 
-import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import EditIcon from "@material-ui/icons/Edit";
-
-import { Link } from "react-router-dom";
 
 export default function Dashboard() {
   const [data, setData] = useState([]);
