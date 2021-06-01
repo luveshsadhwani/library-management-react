@@ -36,18 +36,35 @@ export default function AddEntry() {
         setIsbnumber('')
         setPublisher('')
         setSubject('')
-        
-        await axios.post('http://localhost:8000/books', datatosend)
-
-        toast({
+        // ACCESS THE CUSTOM API HERE AND SEND THE DATA
+        await axios.post(`http://localhost:8000/entry`, null, { params: {
+            authorname: author,
+            booktitle: bookname,
+            subject: subject,
+            publisher: publisher,
+            isbn: isbnnumber
+          }})
+        .then(toast({
             title: "Successfully verified data",
-            description: "Create an api and bind with submit btn",
+            description: "Successfully Pushed data into our Database",
             status: "success",
             variant: "solid",
             duration: 1500,
             position: "top-right",
             isClosable: false,
-          })
+          }))
+        .catch(
+            err =>
+            toast({
+                title: "Successfully verified data",
+                description: `Could not push data into our Database Error: ${err}`,
+                status: "error",
+                variant: "solid",
+                duration: 1500,
+                position: "top-right",
+                isClosable: false,
+              })
+        )  
       }
 
     return(
