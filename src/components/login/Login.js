@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './Login.css'
 import logo from "./assets/old-man-taking-book-from-shelf.png";
 import { useHistory } from 'react-router-dom';
@@ -13,6 +13,15 @@ function Login({log_details}) {
   const [password, setPassword] = useState("")
 //  const [details_to_pass, setDetails_To_Pass] = useState({name:''})
   let history = useHistory();
+
+  useEffect(()=>{
+    let lcl_check = localStorage.getItem('auth');
+    if(lcl_check){
+      history.push("/home")
+    }else{
+      return    
+    }
+  },[])
 
   const submit = (e)=>{
     e.preventDefault()
