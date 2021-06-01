@@ -38,26 +38,63 @@ export default function Edit() {
         setPublisher('')
         setSubject('')
         
-        await axios.put(`http://localhost:8000/books/${id}`, datatosend)
+        // UPDATE WHERE ID
+        await axios.post(`http://localhost:8000/updateentry`,null, {params:{
+            index:id,
+            authorname:author,
+            booktitle:bookname,
+            subject:subject,
+            publisher:publisher,
+            isbn:isbnnumber
+        }})
+        .then(()=>{
+            toast({
+                title: "Successfully verified data",
+                description: "Create an api and bind with submit btn",
+                status: "success",
+                variant: "solid",
+                duration: 1500,
+                position: "top-right",
+                isClosable: false,
+              })
+        })  
+        .catch(err=>{
+            toast({
+                title: "Error Pushing Data",
+                description: `Error: ${err}`,
+                status: "error",
+                variant: "solid",
+                duration: 1500,
+                position: "top-right",
+                isClosable: false,
+              })
+        })
 
-        toast({
-            title: "Successfully verified data",
-            description: "Create an api and bind with submit btn",
-            status: "success",
-            variant: "solid",
-            duration: 1500,
-            position: "top-right",
-            isClosable: false,
-          })
       }
 
     const retrieve =async()=>{
-        const result_data = await axios.get(`http://localhost:8000/books/${id}`)
-        setBookname(result_data.data.booktitle)
-        setAuthor(result_data.data.authorname)
-        setIsbnumber(result_data.data.Isbn)
-        setPublisher(result_data.data.Publisher)
-        setSubject(result_data.data.Subject)
+        // FETCH WHERE ID IS SOMETHING
+        await axios.get(`http://localhost:8000/find`, {params:{
+            entry_id: id
+        }})
+        .then(response=>{
+            setBookname(response.data.booktitle)
+            setAuthor(response.data.authorname)
+            setIsbnumber(response.data.Isbn)
+            setPublisher(response.data.Publisher)
+            setSubject(response.data.Subject)
+        })
+        .catch(err=>{
+            toast({
+                title: "Error Getting Data",
+                description: `Error: ${err}`,
+                status: "error",
+                variant: "solid",
+                duration: 1500,
+                position: "top-right",
+                isClosable: false,
+              })
+        })
     }
     
     useEffect(()=>{
