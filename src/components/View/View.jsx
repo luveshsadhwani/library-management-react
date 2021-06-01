@@ -2,7 +2,7 @@ import React, { useState, useEffect }  from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import axios from "axios";
 import {useParams} from "react-router-dom"
