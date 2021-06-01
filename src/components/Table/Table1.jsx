@@ -18,6 +18,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { createStandaloneToast} from "@chakra-ui/react"
 
 // Pass custom headers as JSX children
 
@@ -36,14 +37,33 @@ const TableHeader = (props) => {
 };
 
 // Data rendering in tables, pass custom columns as JSX children
+// OUR BUTTONS ARE HERE
 
 const TableContent = (props) => {
   const { data, headers, page, rowsPerPage, pagination, actionButtons } = props;
 
+  const toast =  createStandaloneToast()
+
+  // THIS IS WHERE WE DELETE DATA FROM OUR API
   const ActionButtons = ({ id, isbn }) => {
     const deletebook = async (id) => {
-      await axios.delete(`http://localhost:8000/books/${id}`);
-      window.location.reload();
+      await axios.post(`http://localhost:8000/deleteentry`, null, { params:{
+        entry_id: id
+      }})
+      .then(window.location.reload())
+      .catch(err=>{
+        toast({
+            title: "Error Pushing Data",
+            description: `Error: ${err}`,
+            status: "error",
+            variant: "solid",
+            duration: 1500,
+            position: "top-right",
+            isClosable: false,
+          })
+                  })
+
+      //window.location.reload();
     };
 
     return (
