@@ -19,10 +19,11 @@ export default function Dashboard() {
 
   const handleSubmitQuery = (querySubmit) => setQuery(querySubmit);
 
-  // Requset to api
+  // HERE IS WHERE WE GET ALL OUR DATA FROM OUR API
   const loaddata = async () => {
-    const resultdata = await axios.get("http://localhost:8000/books");
-    setData(resultdata.data.reverse());
+    await axios.get("http://localhost:8000/data")
+    .then(response=>setData(response.data.reverse()))
+    //setData(resultdata.data.reverse());
   };
 
   // we chould replace this with a function that extracts the headers from the data
