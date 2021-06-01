@@ -50,7 +50,7 @@ export default function Edit() {
         .then(()=>{
             toast({
                 title: "Successfully verified data",
-                description: "Create an api and bind with submit btn",
+                description: "Successfully Pushed Data into our database",
                 status: "success",
                 variant: "solid",
                 duration: 1500,
