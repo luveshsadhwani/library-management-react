@@ -124,7 +124,7 @@ function Sidebar(props) {
                 <NavLink exact to="/home/events" className="style-link">
                     <ListItem button className="glowonhover">
                         <ListItemIcon><EventSeatRoundedIcon className="color-icon"/></ListItemIcon>
-                        <ListItemText>Events</ListItemText>
+                        <ListItemText>Issued Books</ListItemText>
                     </ListItem>
                 </NavLink>
 
