@@ -3,8 +3,7 @@ import axios from "axios";
 import "./customcss/dashboard.css";
 
 import SearchBar from "../components/SearchBar/SearchBar";
-import Table1 from "../components/Table/Table1";
-
+import TableDashboard from "../components/Table/TableDashboard";
 
 export default function Dashboard() {
   const [data, setData] = useState([]);
@@ -21,8 +20,9 @@ export default function Dashboard() {
 
   // HERE IS WHERE WE GET ALL OUR DATA FROM OUR API
   const loaddata = async () => {
-    await axios.get("http://localhost:8000/data")
-    .then(response=>setData(response.data.reverse()))
+    await axios
+      .get("http://localhost:8000/data")
+      .then((response) => setData(response.data.reverse()));
     //setData(resultdata.data.reverse());
   };
 
@@ -66,7 +66,7 @@ export default function Dashboard() {
         handleChangeFilter={handleChangeFilter}
         onSubmit={handleSubmitQuery}
       />
-      <Table1
+      <TableDashboard
         data={
           query && searchFilter
             ? data.filter((d) => d[searchFilter].toLowerCase().includes(query))

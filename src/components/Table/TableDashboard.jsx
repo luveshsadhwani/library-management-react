@@ -16,9 +16,10 @@ import "../../container/customcss/dashboard.css";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import EventSeatRoundedIcon from "@material-ui/icons/EventSeatRounded";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { createStandaloneToast} from "@chakra-ui/react"
+import { createStandaloneToast } from "@chakra-ui/react";
 
 // Pass custom headers as JSX children
 
@@ -40,19 +41,23 @@ const TableHeader = (props) => {
 // OUR BUTTONS ARE HERE
 
 const TableContent = (props) => {
+  console.log(props);
   const { data, headers, page, rowsPerPage, pagination, actionButtons } = props;
 
-  const toast =  createStandaloneToast()
+  const toast = createStandaloneToast();
 
   // THIS IS WHERE WE DELETE DATA FROM OUR API
   const ActionButtons = ({ id, isbn }) => {
     const deletebook = async (id) => {
-      await axios.post(`http://localhost:8000/deleteentry`, null, { params:{
-        entry_id: id
-      }})
-      .then(window.location.reload())
-      .catch(err=>{
-        toast({
+      await axios
+        .post(`http://localhost:8000/deleteentry`, null, {
+          params: {
+            entry_id: id,
+          },
+        })
+        .then(window.location.reload())
+        .catch((err) => {
+          toast({
             title: "Error Pushing Data",
             description: `Error: ${err}`,
             status: "error",
@@ -60,8 +65,8 @@ const TableContent = (props) => {
             duration: 1500,
             position: "top-right",
             isClosable: false,
-          })
-                  })
+          });
+        });
 
       //window.location.reload();
     };
@@ -84,6 +89,12 @@ const TableContent = (props) => {
         >
           <DeleteOutlineIcon />
         </button>
+        <Link
+          to={`/home/issue/${id}`}
+          className="btn btn-outline-primary mr2 mt2"
+        >
+          <EventSeatRoundedIcon />
+        </Link>
       </TableCell>
     );
   };
