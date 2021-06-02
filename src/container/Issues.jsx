@@ -3,7 +3,7 @@ import axios from "axios";
 import "./customcss/dashboard.css";
 
 import SearchBar from "../components/SearchBar/SearchBar";
-import Table1 from "../components/Table/Table1";
+import Table2 from "../components/Table/Table2";
 
 
 export default function Dashboard() {
@@ -58,7 +58,7 @@ export default function Dashboard() {
         handleChangeFilter={handleChangeFilter}
         onSubmit={handleSubmitQuery}
       />
-      <Table1
+      <Table2
         data={
           query && searchFilter
             ? data.filter((d) => d[searchFilter].toLowerCase().includes(query))
