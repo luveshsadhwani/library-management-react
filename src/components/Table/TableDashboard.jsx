@@ -41,7 +41,6 @@ const TableHeader = (props) => {
 // OUR BUTTONS ARE HERE
 
 const TableContent = (props) => {
-  console.log(props);
   const { data, headers, page, rowsPerPage, pagination, actionButtons } = props;
 
   const toast = createStandaloneToast();

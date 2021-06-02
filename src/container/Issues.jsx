@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./customcss/dashboard.css";
 
-import SearchBar from "../components/SearchBar/SearchBar";
+// import SearchBar from "../components/SearchBar/SearchBar";
 import TableIssues from "../components/Table/TableIssues";
 
 
@@ -52,12 +52,12 @@ export default function Dashboard() {
         <h1 className="center">Welcome to Dashboard</h1>
         <h3 className="center">{`Total Entities ${data.length}`}</h3>
       </div>
-      <SearchBar
+      {/* <SearchBar
         filterOptions={dataHeaders}
         searchFilter={searchFilter}
         handleChangeFilter={handleChangeFilter}
         onSubmit={handleSubmitQuery}
-      />
+      /> */}
       <TableIssues
         data={
           query && searchFilter
