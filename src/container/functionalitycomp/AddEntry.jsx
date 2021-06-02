@@ -42,7 +42,8 @@ export default function AddEntry() {
             booktitle: bookname,
             subject: subject,
             publisher: publisher,
-            isbn: isbnnumber
+            isbn: isbnnumber,
+            issued_data: ""
           }})
         .then(toast({
             title: "Successfully verified data",
@@ -64,7 +65,7 @@ export default function AddEntry() {
                 position: "top-right",
                 isClosable: false,
               })
-        )  
+        )
       }
 
     return(
@@ -107,3 +108,4 @@ export default function AddEntry() {
     )
 
 }
+
