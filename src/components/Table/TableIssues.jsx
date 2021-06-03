@@ -16,6 +16,12 @@ import "../../container/customcss/dashboard.css";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import axios from "axios";
 import { createStandaloneToast} from "@chakra-ui/react"
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 // Pass custom headers as JSX children
 
@@ -42,36 +48,63 @@ const TableContent = (props) => {
   const toast =  createStandaloneToast()
 
   // THIS IS WHERE WE DELETE DATA FROM OUR API
-  const ActionButtons = ({ id, isbn }) => {
-    const deletebook = async (id) => {
-      await axios.post(`http://localhost:8000/deleteentry`, null, { params:{
-        entry_id: id
-      }})
-      .then(window.location.reload())
-      .catch(err=>{
-        toast({
-            title: "Error Pushing Data",
-            description: `Error: ${err}`,
-            status: "error",
-            variant: "solid",
-            duration: 1500,
-            position: "top-right",
-            isClosable: false,
-          })
-                  })
+  const ActionButtons = ({ id}) => {
 
-      //window.location.reload();
+    const [open, setOpen] = React.useState(false);
+
+    const handleClose = () => {
+      setOpen(false);
     };
+
+    const test=async (id)=>{
+      await axios.post(`http://localhost:8000/issued`, null, { params:{
+        entry_id: id,
+        issued_data:""
+      }})
+      .then(setOpen(false))
+      .catch((err) => {
+        toast({
+          title: "Error Pushing Data",
+          description: `Error: ${err}`,
+          status: "error",
+          variant: "solid",
+          duration: 1500,
+          position: "top-right",
+          isClosable: false,
+        });
+      });
+      window.location.reload()
+    }
 
     return (
       <TableCell key={`btns-${id}`}>
-        <button
-          className="btn btn-danger mr2 mt2"
-          to="/home/dashboard"
-          onClick={() => deletebook(id)}
+        <Button
+          variant="contained" color="secondary"
+          onClick={() => setOpen(true)}
         >
           <DeleteOutlineIcon />
-        </button>
+        </Button>
+        <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Do you want to unissue this book?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to unissue this book?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            No
+          </Button>
+          <Button onClick={()=>test(id)} varient="contained" color="secondary" autoFocus>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>        
       </TableCell>
     );
   };
