@@ -29,9 +29,10 @@ export default function IssueForm() {
     console.log(datatosend);
 
     // UPDATE WHERE ID
-    await axios.post(`http://localhost:8000/issued`, null, { params: {
+    await axios.post(`http://localhost:8000/updateissued`, null, { params: {
       entry_id:id,
-      issued_data:studentId
+      data_to_push:studentId
+
       }})
       .then(() => {
         toast({
