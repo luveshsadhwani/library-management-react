@@ -12,6 +12,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import userAvatar from "../container/assets/user1avatar.jpg";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
@@ -84,7 +85,6 @@ const useStyles = makeStyles({
     color: "black",
   },
 });
-
 
 export default function Settings() {
   const [users, setUsers] = useState(usersData);
@@ -163,7 +163,7 @@ export default function Settings() {
   return (
     <div>
       <h1 className="center">User Management</h1>
-      <Button variant="contained" color="primary" startIcon={<AddIcon />}>
+      <Button component={Link} to="/home/adduser" variant="contained" color="primary" startIcon={<AddIcon />}>
         Add User
       </Button>
       {users.map((user, index) => (
