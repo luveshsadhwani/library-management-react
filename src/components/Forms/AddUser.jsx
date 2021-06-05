@@ -12,12 +12,17 @@ export default function AddUser() {
     phone: "",
     employeeId: "",
     designation: "",
+    password: "",
   };
 
   let history = useHistory();
-
   const toast = createStandaloneToast();
   const [userInfo, setUserInfo] = useState(defaultUserInfoState);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    return showPassword ? setShowPassword(false) : setShowPassword(true);
+  };
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -149,6 +154,27 @@ export default function AddUser() {
                   onChange={handleChange}
                   required
                 />
+              </div>
+              <div className="entry-box">
+                <span className="details">Password</span>
+                <input
+                  name={Object.keys(userInfo)[6]}
+                  value={userInfo.password}
+                  placeholder="Password..."
+                  onChange={handleChange}
+                  required
+                  type={showPassword? "text" : "password"}
+                />
+                <div style={{ display: "flex" }}>
+                  <input
+                    type="checkbox"
+                    onClick={toggleShowPassword}
+                    style={{ width: "20px" }}
+                  />
+                  <span style={{ margin: "auto 0px auto 5px" }}>
+                    Show Password
+                  </span>
+                </div>
               </div>
             </div>
             <div className="button">
