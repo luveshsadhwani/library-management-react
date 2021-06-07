@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   Paper,
@@ -11,6 +11,8 @@ import {
   Button,
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
+import { createStandaloneToast } from "@chakra-ui/react";
+import axios from "axios";
 
 let theme = createMuiTheme();
 theme.typography.h6 = {
@@ -27,26 +29,6 @@ theme.typography.h6 = {
   "@media (min-width:1300px)": {
     fontSize: "1.25rem",
   },
-};
-
-// dummy data
-const user = {
-  firstName: "Luvesh",
-  lastName: "Sadhwani",
-  email: "luveshsadhwani@gmail.com",
-  phone: "123456789",
-  employeeId: "123",
-  designation: "Some Position",
-  //   imagelink: "This is my image",
-};
-
-const mapInformation = {
-  firstName: "First Name",
-  lastName: "Last Name",
-  email: "Email",
-  phone: "Phone",
-  employeeId: "Employee ID",
-  designation: "Designation",
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -88,31 +70,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UserInfoFormItem = (userInfo, onChange, propt, index) => {
-  const classes = useStyles();
-  return (
-    <Grid
-      item
-      xs={6}
-      key={`display-${index}`}
-      container
-      direction="column"
-      alignItems="center"
-    >
-      <Paper className={classes.form}>
-        <Grid item xs={12}>
-          <Typography variant="subtitle1">{mapInformation[propt]}</Typography>
-        </Grid>
-        <Grid item xs={12} align="center">
-          <TextField
-            defaultValue={userInfo[propt]}
-            name={Object.keys(user)[index]}
-            onChange={onChange}
-          />
-        </Grid>
-      </Paper>
-    </Grid>
-  );
+const mapInformation = {
+  firstname: "First Name",
+  lastname: "Last Name",
+  email: "Email",
+  phone: "Phone",
+  empid: "Employee ID",
+  designation: "Designation",
 };
 
 const UserInfoContentItem = (userInfo, propt, index) => {
@@ -138,6 +102,33 @@ const UserInfoContentItem = (userInfo, propt, index) => {
   );
 };
 
+const UserInfoFormItem = (userInfo, onChange, propt, index) => {
+  const classes = useStyles();
+  return (
+    <Grid
+      item
+      xs={6}
+      key={`display-${index}`}
+      container
+      direction="column"
+      alignItems="center"
+    >
+      <Paper className={classes.form}>
+        <Grid item xs={12}>
+          <Typography variant="subtitle1">{mapInformation[propt]}</Typography>
+        </Grid>
+        <Grid item xs={12} align="center">
+          <TextField
+            defaultValue={userInfo[propt]}
+            name={Object.keys(userInfo)[index]}
+            onChange={onChange}
+          />
+        </Grid>
+      </Paper>
+    </Grid>
+  );
+};
+
 const ProfileHeader = ({ userInfo, handleEdit }) => {
   return (
     <Grid item xs={12} container spacing={2}>
@@ -148,7 +139,7 @@ const ProfileHeader = ({ userInfo, handleEdit }) => {
       </Grid>
       <Grid item sm={6} md={8} alignt="left" container>
         <Grid item xs={12} container alignItems="flex-end">
-          <Typography variant="h4">{userInfo.firstName}</Typography>
+          <Typography variant="h4">{userInfo.firstname}</Typography>
           <IconButton
             style={{ backgroundColor: "#594f8d", marginLeft: "1rem" }}
             onClick={handleEdit}
@@ -157,7 +148,7 @@ const ProfileHeader = ({ userInfo, handleEdit }) => {
           </IconButton>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h4">{userInfo.lastName}</Typography>
+          <Typography variant="h4">{userInfo.lastname}</Typography>
         </Grid>
       </Grid>
     </Grid>
@@ -165,11 +156,36 @@ const ProfileHeader = ({ userInfo, handleEdit }) => {
 };
 
 export default function Profile() {
+  // !! WE MUST FOLLOW THE EXACT STRUCTURE OF THE USER DATA RETURNED FROM THE API
+  const defaultUserInfo = {
+    empid: "",
+    firstname: "",
+    lastname: "",
+    email: "",
+    phone: "",
+    designation: "",
+  };
+
+  const toast = createStandaloneToast();
   const [formView, setFormView] = useState(false);
-  const [userInfo, setUserInfo] = useState(user);
+  const [userInfo, setUserInfo] = useState(defaultUserInfo);
 
-  // ADD AJAX CALLS HERE IN A USE EFFECT HOOK, use api call to update userInfo, once it works replace the initial state of userInfo with a blank string
+  // ADD AJAX CALLS HERE IN A USE EFFECT HOOK, use api to retrieve and update userInfo
 
+  useEffect(() => {
+    const retrieveUser = async () => {
+      const empId = localStorage.getItem("emPID");
+      await axios
+        .get(`http://localhost:8000/employee_info/`, {
+          params: {
+            employee_id: empId,
+          },
+        })
+        .then((response) => setUserInfo(response.data));
+    };
+
+    retrieveUser();
+  }, []);
   const handleEdit = () => setFormView(true);
 
   const handleChange = (e) => {
@@ -180,17 +196,54 @@ export default function Profile() {
     }));
   };
 
-  const handleSubmit = () => {
-    setUserInfo(userInfo);
-    setFormView(false);
+  const handleSubmit = async () => {
+    console.log(userInfo);
+    // process data for employee id
+    let params = {
+      employee_id: userInfo.empid,
+      firstname: userInfo.firstname,
+      lastname: userInfo.lastname,
+      email: userInfo.email,
+      phone: userInfo.phone,
+      designation: userInfo.designation
+    };
+    console.log(params);
+
+    await axios
+      .post(`http://localhost:8000/update_employee_info`, null, {
+        params: params
+      })
+      .then(() => {
+        toast({
+          title: `Successfully updated user ${userInfo.firstname} ${userInfo.lastname}`,
+          description: `ID: ${userInfo.empid}`,
+          status: "success",
+          variant: "solid",
+          duration: 3000,
+          position: "top-right",
+          isClosable: false,
+        });
+      })
+      .catch((err) => {
+        toast({
+          title: "Error Pushing Data",
+          description: `Error: ${err}`,
+          status: "error",
+          variant: "solid",
+          duration: 3000,
+          position: "top-right",
+          isClosable: false,
+        });
+      })
+      .finally(() => setFormView(false));
   };
 
   const toggleRenderForm = () => {
     return formView
-      ? Object.keys(user).map((key, index) =>
+      ? Object.keys(defaultUserInfo).map((key, index) =>
           UserInfoFormItem(userInfo, handleChange, key, index)
         )
-      : Object.keys(user).map((key, index) =>
+      : Object.keys(defaultUserInfo).map((key, index) =>
           UserInfoContentItem(userInfo, key, index)
         );
   };
