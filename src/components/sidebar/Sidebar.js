@@ -176,7 +176,7 @@ function Sidebar(props) {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" noWrap>
-                            {`Welcome ${props.user}`}
+                            Welcome
                         </Typography>
                     </Toolbar>
                 </AppBar>
