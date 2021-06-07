@@ -3,6 +3,7 @@ import './Login.css'
 import logo from "./assets/old-man-taking-book-from-shelf.png";
 import { useHistory } from 'react-router-dom';
 import { createStandaloneToast} from "@chakra-ui/react"
+import axios from "axios";
 //import authentication from "../auth/auth"
 
 
@@ -23,34 +24,59 @@ function Login({log_details}) {
     }
   },[])
 
-  const submit = (e)=>{
-    e.preventDefault()
-
-    // DO ALL THE AUTHENTICATION RIGHT HERE
-    if (username==="root" && password==="root"){
-//        authentication.onAuthentication()
+  const check_for_login = async (username, password) => {
+    await axios
+    .get(`http://localhost:8000/login`,{
+      params: {
+        username: username,
+        password: password
+      },
+    })
+    .then(result => {
+      console.log(result.data)
+      if(!result.data){
+        toast({
+          title: "An error occurred trying to login.",
+          description: "Unable to verify Account.",
+          status: "error",
+          variant: "solid",
+          duration: 1200,
+          position: "top-left",
+          isClosable: false,
+        })
+        setUsername('')
+        setPassword('')
+      }
+      else{
+        localStorage.setItem('emPID', result.data.empid);
+        localStorage.setItem('user', result.data.username)
+        console.log(localStorage.getItem('emPID'))
         log_details(username);
         history.push("/home")
-    }else{
-      setPassword("")
-      setUsername("")
-    }
+      }
 
-  }
-
-  const check_m=(e)=>{
-    if(username!=="root" || password!=="root"){
-    toast({
-      title: "An error occurred trying to login.",
-      description: "Unable to verify Account.",
-      status: "error",
-      variant: "solid",
-      duration: 1200,
-      position: "top-left",
-      isClosable: false,
     })
+    .catch(err=>{
+      toast({
+        title: "An error occurred trying to login.",
+        description: `Error from API status: ${err}`,
+        status: "error",
+        variant: "solid",
+        duration: 1200,
+        position: "top-left",
+        isClosable: false,
+      })
+    })
+  };
+
+
+  const submit = (e)=>{
+    e.preventDefault()
+    check_for_login(username, password)
+
   }
-  }  
+
+
     return (
         
         <div className="login-form">
@@ -62,7 +88,7 @@ function Login({log_details}) {
                 <form onSubmit={submit}>
                   <input type="text" value={username} placeholder="User Name" onChange={(e)=>{setUsername(e.target.value)}} required />
                   <input type="password" value={password} placeholder="Password" onChange={(e)=>{setPassword(e.target.value)}} required />
-                  <button className="btn" type="submit" onClick={check_m}>Login</button>
+                  <button className="btn" type="submit" >Login</button>
                 </form>
                 <p className="account">Don't have an account? <br/>contact your sys admin</p>
               </div>
