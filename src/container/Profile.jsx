@@ -178,7 +178,7 @@ export default function Profile() {
       await axios
         .get(`http://localhost:8000/employee_info/`, {
           params: {
-            employee_id: empId,
+            empid: empId,
           },
         })
         .then((response) => setUserInfo(response.data));
@@ -199,19 +199,12 @@ export default function Profile() {
   const handleSubmit = async () => {
     console.log(userInfo);
     // process data for employee id
-    let params = {
-      employee_id: userInfo.empid,
-      firstname: userInfo.firstname,
-      lastname: userInfo.lastname,
-      email: userInfo.email,
-      phone: userInfo.phone,
-      designation: userInfo.designation
-    };
+    let params = userInfo;
     console.log(params);
 
     await axios
       .post(`http://localhost:8000/update_employee_info`, null, {
-        params: params
+        params: params,
       })
       .then(() => {
         toast({
