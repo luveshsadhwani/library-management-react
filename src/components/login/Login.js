@@ -86,7 +86,7 @@ function Login({log_details}) {
               <div className="content">
                 <h2>Login</h2>
                 <form onSubmit={submit}>
-                  <input type="text" value={username} placeholder="User Name" onChange={(e)=>{setUsername(e.target.value)}} required />
+                  <input type="email" value={username} placeholder="User Name" onChange={(e)=>{setUsername(e.target.value)}} required />
                   <input type="password" value={password} placeholder="Password" onChange={(e)=>{setPassword(e.target.value)}} required />
                   <button className="btn" type="submit" >Login</button>
                 </form>
