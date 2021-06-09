@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import './Sidebar.css'
 import { Redirect } from "react-router-dom"
 import { useHistory } from 'react-router-dom';
@@ -79,15 +79,23 @@ const useStyles = makeStyles((theme) => ({
 
 
 function Sidebar(props) {
-
+    let history = useHistory();
     const { window } = props;
     const classes = useStyles();
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = React.useState(false);
-
+    let push_bruh_data = props.pleasepush
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
+
+    useEffect(()=>{
+        if(push_bruh_data===true){
+            push_bruh_data = false
+            localStorage.clear()
+            history.push("/")
+        }
+    },[])
 
     const drawer = (
         <div>
@@ -153,7 +161,6 @@ function Sidebar(props) {
         </div>
     );
 
-    let history = useHistory();
     function log_out() {
         localStorage.clear()
         history.push("/")
