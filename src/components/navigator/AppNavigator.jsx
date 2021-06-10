@@ -11,8 +11,6 @@ import Edit from "../Forms/Edit";
 import EditBookFormik from "../Forms/EditBookFormik";
 import View from "../View/View";
 import IssueForm from "../Forms/IssueForm";
-import AddUser from "../Forms/AddUser";
-import AddUserFormik from "../Forms/AddUserFormik";
 
 export default function AppNavigator() {
   let match = useRouteMatch().url;
@@ -29,8 +27,6 @@ export default function AppNavigator() {
       <Route path={`${match}/edit/:id`} component={EditBookFormik} exact />
       <Route path={`${match}/view/:isbn`} component={View} exact />
       <Route path={`${match}/issue/:id`} component={IssueForm} exact />
-      <Route path={`${match}/adduser`} component={AddUser} exact />
-      <Route path={`${match}/addusernew`} component={AddUserFormik} exact />
     </Switch>
   );
 }
