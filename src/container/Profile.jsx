@@ -13,6 +13,7 @@ import {
 import EditIcon from "@material-ui/icons/Edit";
 import { createStandaloneToast } from "@chakra-ui/react";
 import axios from "axios";
+import { useHistory } from 'react-router-dom';
 
 let theme = createMuiTheme();
 theme.typography.h6 = {
@@ -169,16 +170,21 @@ export default function Profile() {
   const toast = createStandaloneToast();
   const [formView, setFormView] = useState(false);
   const [userInfo, setUserInfo] = useState(defaultUserInfo);
-
+  let history = useHistory();
+  let empId;
   // ADD AJAX CALLS HERE IN A USE EFFECT HOOK, use api to retrieve and update userInfo
 
   useEffect(() => {
     const retrieveUser = async () => {
-      const empId = localStorage.getItem("emPID");
+      try {
+        empId = localStorage.getItem("emPID");
+      } catch (error) {
+        history.push("/")
+      }
       await axios
         .get(`http://localhost:8000/employee_info/`, {
           params: {
-            empid: empId,
+            employee_id: empId,
           },
         })
         .then((response) => setUserInfo(response.data));
@@ -199,12 +205,19 @@ export default function Profile() {
   const handleSubmit = async () => {
     console.log(userInfo);
     // process data for employee id
-    let params = userInfo;
+    let params = {
+      employee_id: userInfo.empid,
+      firstname: userInfo.firstname,
+      lastname: userInfo.lastname,
+      email: userInfo.email,
+      phone: userInfo.phone,
+      designation: userInfo.designation
+    };
     console.log(params);
 
     await axios
       .post(`http://localhost:8000/update_employee_info`, null, {
-        params: params,
+        params: params
       })
       .then(() => {
         toast({
