@@ -16,7 +16,6 @@ import DashboardRoundedIcon from '@material-ui/icons/DashboardRounded';
 import AddToPhotosRoundedIcon from '@material-ui/icons/AddToPhotosRounded';
 import EventSeatRoundedIcon from '@material-ui/icons/EventSeatRounded';
 import GpsFixedRoundedIcon from '@material-ui/icons/GpsFixedRounded';
-import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -144,12 +143,6 @@ function Sidebar(props) {
                     </ListItem>
                 </NavLink>
 
-                <NavLink exact to="/home/settings" className="style-link">
-                    <ListItem button className="glowonhover">
-                        <ListItemIcon><SettingsRoundedIcon className="color-icon"/></ListItemIcon>
-                        <ListItemText>Settings</ListItemText>
-                    </ListItem>
-                </NavLink>
             </List>
             <Divider />
             <List>
