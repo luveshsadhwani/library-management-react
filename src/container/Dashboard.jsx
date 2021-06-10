@@ -14,23 +14,31 @@ export default function Dashboard() {
   const [searchSubmit, setSearchSubmit] = useState(false);
 
   useEffect(() => {
-    if (searchSubmit) {
+    // HERE IS WHERE WE GET ALL OUR DATA FROM OUR API
+    const loaddata = async () => {
+      let params = {
+        field: searchFilter,
+        val: query,
+      };
+
+      await axios
+        // .get("http://localhost:8000/data")
+        .get("http://localhost:8000/filter_search", {
+          params: params,
+        })
+        .then((response) => setData(response.data.reverse()));
+      //setData(resultdata.data.reverse());
+    };
+
+    if (searchSubmit && query) {
       loaddata();
     }
-  }, [searchSubmit]);
+  }, [searchSubmit, query, searchFilter]);
 
   const handleSubmitQuery = (query, filter) => {
     setQuery(query);
     setSearchFilter(filter);
     setSearchSubmit(true);
-  };
-
-  // HERE IS WHERE WE GET ALL OUR DATA FROM OUR API
-  const loaddata = async () => {
-    await axios
-      .get("http://localhost:8000/data")
-      .then((response) => setData(response.data.reverse()));
-    //setData(resultdata.data.reverse());
   };
 
   // we chould replace this with a function that extracts the headers from the data
