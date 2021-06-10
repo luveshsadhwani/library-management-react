@@ -23,13 +23,13 @@ const TextField = ({ label, ...props }) => {
 
 // check if staff have a specific email, we can use regex to match this
 //check phone number format
-function EditPresentational(props) {
+function IssuePresentational(props) {
   // Formik keeps tracks of form values, so we won't have useState here, take in the state from the parent. These will map out the keys and values for each textfield we have through the name prop
   const { bookInfo } = props;
   const history = useHistory();
   // Yup can validate for different types of data. Here we validate a string that matches a regex so that we don't get numbers. I've written it separately to make it neater. I allowed numbers for the booktitle, but not author, publisher or subject
   const textValidation = Yup.string().matches(
-    /^[a-zA-Z ]+$/,
+    /^[a-zA-Z. ]+$/,
     "No numbers allowed"
   );
 
@@ -139,7 +139,7 @@ function EditPresentational(props) {
               />
             </div>
             <div className="button">
-              <input type="submit" value="Edit" />
+              <input type="submit" value="IssueBook" />
             </div>
           </Form>
         </Formik>
@@ -148,7 +148,7 @@ function EditPresentational(props) {
   );
 }
 
-export default function EditBookFormik() {
+export default function IssueBookFormik() {
   // I've run our get request separately here so the actual form will only be in charge of displaying and submitting ata
 
   const { id } = useParams();
@@ -193,5 +193,5 @@ export default function EditBookFormik() {
     retrieve();
   }, [id]);
 
-  return <EditPresentational bookInfo={bookInfo} />;
+  return <IssuePresentational bookInfo={bookInfo} />;
 }

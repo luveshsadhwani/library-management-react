@@ -26,7 +26,7 @@ function EditPresentational(props) {
   const history = useHistory()
   // Yup can validate for different types of data. Here we validate a string that matches a regex so that we don't get numbers. I've written it separately to make it neater. I allowed numbers for the booktitle, but not author, publisher or subject
   const textValidation = Yup.string().matches(
-    /^[a-zA-Z ]+$/,
+    /^[a-zA-Z. ]+$/,
     "No numbers allowed"
   );
 
