@@ -21,7 +21,7 @@ export default function Dashboard() {
 
   // HERE IS WHERE WE GET ALL OUR DATA FROM OUR API
   const loaddata = async () => {
-    await axios.get("http://localhost:8000/data")
+    await axios.get("http://localhost:8000/getallissued")
     .then(response=>setData(response.data.reverse()))
     //setData(resultdata.data.reverse());
   };
@@ -38,7 +38,7 @@ export default function Dashboard() {
     },
     {
       name: "Issued to",
-      prop: "Subject",
+      prop: "issued",
     },
     {
       name: "ISBN",
