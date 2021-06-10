@@ -22,7 +22,7 @@ function Login({log_details}) {
     }else{
       return    
     }
-  },[])
+  },[history])
 
   const check_for_login = async (username, password) => {
     await axios
@@ -33,7 +33,6 @@ function Login({log_details}) {
       },
     })
     .then(result => {
-      console.log(result.data)
       if(!result.data){
         toast({
           title: "An error occurred trying to login.",
@@ -50,7 +49,6 @@ function Login({log_details}) {
       else{
         localStorage.setItem('emPID', result.data.empid);
         localStorage.setItem('user', result.data.username)
-        console.log(localStorage.getItem('emPID'))
         log_details(username);
         history.push("/home")
       }

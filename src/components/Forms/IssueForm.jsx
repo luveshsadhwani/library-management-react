@@ -18,9 +18,9 @@ export default function IssueForm() {
   };
 
   const [bookInfo, setBookInfo] = useState(defaultBookInfoState);
-  const toast = createStandaloneToast();
+  
   const { id } = useParams();
-  console.log(bookInfo);
+
   let history = useHistory();
 
   const handleChange = (e) => {
@@ -33,10 +33,9 @@ export default function IssueForm() {
 
   const submit_issue = async (e) => {
     e.preventDefault();
-
+    const toast = createStandaloneToast();
     //// CONNECTION TO THE CUSTOM API GOES HERE USE AXIOS TO SENT POST REQ
     let params = bookInfo.issued;
-    console.log(params);
 
     // UPDATE WHERE ID
     await axios
@@ -72,6 +71,7 @@ export default function IssueForm() {
   };
 
   useEffect(() => {
+    const toast = createStandaloneToast();
     async function retrieve() {
       await axios
         .get(`http://localhost:8000/find`, {

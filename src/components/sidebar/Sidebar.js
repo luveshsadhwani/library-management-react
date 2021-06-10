@@ -1,8 +1,9 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import './Sidebar.css'
 import { Redirect } from "react-router-dom"
 import { useHistory } from 'react-router-dom';
 import { NavLink } from "react-router-dom"
+import axios from "axios";
 
 // Custom Css
 import "./Sidebar.css"
@@ -77,24 +78,42 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-function Sidebar(props) {
+function Sidebar(props) {  
     let history = useHistory();
     const { window } = props;
     const classes = useStyles();
     const theme = useTheme();
-    const [mobileOpen, setMobileOpen] = React.useState(false);
-    let push_bruh_data = props.pleasepush
+    const [mobileOpen, setMobileOpen] = useState(false);
+
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
     useEffect(()=>{
-        if(push_bruh_data===true){
-            push_bruh_data = false
-            localStorage.clear()
-            history.push("/")
+        // checks if an account is deleted. if it has been, it will force the user to logout and clear local storage
+        const api_request_to_check = async () =>{
+            const empId = localStorage.getItem("emPID");
+            let trimmed_empid
+            try {
+              trimmed_empid = empId.replace("#", "%23")
+            } catch (error) {
+              console.log(error)
+            }
+            await axios.get(`http://localhost:8000/deleted_account?employee_id=${trimmed_empid}`)
+            .then(
+              res=>{
+                if(res.data===false){
+                  localStorage.clear()
+                  history.push("/")
+
+                }else{
+
+                }
+              }
+            )
         }
-    },[])
+        api_request_to_check()
+    },[history])
 
     const drawer = (
         <div>
@@ -159,7 +178,6 @@ function Sidebar(props) {
         history.push("/")
     }
     const container = window !== undefined ? () => window().document.body : undefined;
-    console.log(`auth check is ${props.auth_check}`)
     if (props.auth_check) {
         return (
             <div className="wrapper">

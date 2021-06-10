@@ -2,7 +2,7 @@ import React from 'react'
 import { Parallax, ParallaxLayer } from '@react-spring/parallax'
 import "./Home.css"
 import IMAGE from "./assets/girl-work-on-laptop.png"
-import ILL from "./assets/ill.jpg"
+// import ILL from "./assets/ill.jpg"
 import SUPPORT from "./assets/support.png"
 
 
@@ -37,7 +37,10 @@ export default function Home() {
                 <ParallaxLayer offset={1} speed={0.5}>
                     <div className="blog-post text-p">
                         <div className="blog-img">
-                            <img src={ILL} alt="ill"/>
+                            <img 
+                              // src={ILL} 
+                              alt="ill"
+                            />
                         </div>
                         <div className="blog-post-info">
                             <h1 className="blog-post-title text-p">Easy To Use</h1>
@@ -55,7 +58,7 @@ export default function Home() {
                     <div className="layer2-container text-p">
                         <h1>Fast and Reliable</h1>
                         <div className="at-your-help">
-                            <img src={SUPPORT}/>
+                            <img src={SUPPORT} alt="support" />
                             <h3 className="at-your-help text-p">Always at your service</h3>
                         </div>
                         <footer className="ftr-cls">Best Way to automate your Library</footer>

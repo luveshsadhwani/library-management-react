@@ -13,7 +13,6 @@ import {
 import EditIcon from "@material-ui/icons/Edit";
 import { createStandaloneToast } from "@chakra-ui/react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 
 let theme = createMuiTheme();
 theme.typography.h6 = {
@@ -158,29 +157,22 @@ const ProfileHeader = ({ userInfo, handleEdit }) => {
 
 export default function Profile() {
   // !! WE MUST FOLLOW THE EXACT STRUCTURE OF THE USER DATA RETURNED FROM THE API
-  const defaultUserInfo = {
+
+  const toast = createStandaloneToast();
+  const [formView, setFormView] = useState(false);
+  const [userInfo, setUserInfo] = useState({
     empid: "",
     firstname: "",
     lastname: "",
     email: "",
     phone: "",
     designation: "",
-  };
-
-  const toast = createStandaloneToast();
-  const [formView, setFormView] = useState(false);
-  const [userInfo, setUserInfo] = useState(defaultUserInfo);
-  let history = useHistory();
-  let empId;
+  });
   // ADD AJAX CALLS HERE IN A USE EFFECT HOOK, use api to retrieve and update userInfo
 
   useEffect(() => {
     const retrieveUser = async () => {
-      try {
-        empId = localStorage.getItem("emPID");
-      } catch (error) {
-        history.push("/");
-      }
+      let empId = localStorage.getItem("emPID");
 
       await axios
         .get(`http://localhost:8000/employee_info/`, {
@@ -190,7 +182,14 @@ export default function Profile() {
           if (response.data) {
             setUserInfo(response.data);
           } else {
-            setUserInfo(defaultUserInfo);
+            setUserInfo({
+              empid: "",
+              firstname: "",
+              lastname: "",
+              email: "",
+              phone: "",
+              designation: "",
+            });
           }
         });
     };
@@ -208,7 +207,6 @@ export default function Profile() {
   };
 
   const handleSubmit = async () => {
-    console.log(userInfo);
     // process data for employee id
     let params = {
       employee_id: userInfo.empid,
@@ -218,7 +216,6 @@ export default function Profile() {
       phone: userInfo.phone,
       designation: userInfo.designation,
     };
-    console.log(params);
 
     await axios
       .post(`http://localhost:8000/update_employee_info`, null, {
@@ -251,10 +248,10 @@ export default function Profile() {
 
   const toggleRenderForm = () => {
     return formView
-      ? Object.keys(defaultUserInfo).map((key, index) =>
+      ? Object.keys(userInfo).map((key, index) =>
           UserInfoFormItem(userInfo, handleChange, key, index)
         )
-      : Object.keys(defaultUserInfo).map((key, index) =>
+      : Object.keys(userInfo).map((key, index) =>
           UserInfoContentItem(userInfo, key, index)
         );
   };

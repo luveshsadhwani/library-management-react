@@ -13,8 +13,6 @@ export default function Dashboard() {
   const [searchFilter, setSearchFilter] = useState("");
   const [searchSubmit, setSearchSubmit] = useState(false);
 
-  console.log(data);
-
   useEffect(() => {
     if (searchSubmit) {
       loaddata();
@@ -70,7 +68,10 @@ export default function Dashboard() {
         {searchSubmit && (
           <Grid container>
             <Grid item xs={6} align="left">
-              <Button style={{ backgroundColor: "#594f8d", color: "white" }} onClick={() => setSearchSubmit(false)}>
+              <Button
+                style={{ backgroundColor: "#594f8d", color: "white" }}
+                onClick={() => setSearchSubmit(false)}
+              >
                 SEARCH AGAIN
               </Button>
             </Grid>

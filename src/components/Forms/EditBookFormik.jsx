@@ -55,7 +55,7 @@ function EditPresentational(props) {
         subject: values.Subject,
         isbn: values.Isbn,
       };
-    console.log(params);
+
     // UPDATE WHERE ID
     await axios
       .post(`http://localhost:8000/updateentry`, null, {

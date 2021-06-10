@@ -40,8 +40,6 @@ export default function AddEntry() {
       issued_data: "",
     };
 
-    console.log(params);
-
     setBookInfo(defaultBookInfoState);
     // ACCESS THE CUSTOM API HERE AND SEND THE DATA
     await axios
