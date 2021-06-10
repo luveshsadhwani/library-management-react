@@ -2,7 +2,7 @@ import React from "react";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 
 import Home from "../../container/Home";
-import Profile from "../../container/Profile";
+import ProfileContainer from "../../container/Profile/ProfileContainer"
 import Dashboard from "../../container/Dashboard";
 import Issues from "../../container/Issues";
 import Location from "../../container/Location";
@@ -17,7 +17,7 @@ export default function AppNavigator() {
   return (
     <Switch>
       <Route path={`${match}`} component={Home} exact />
-      <Route path={`${match}/profile`} component={Profile} exact />
+      <Route path={`${match}/profile`} component={ProfileContainer} exact />
       <Route path={`${match}/dashboard`} component={Dashboard} exact />
       <Route path={`${match}/events`} component={Issues} exact />
       <Route path={`${match}/location`} component={Location} exact />
