@@ -13,7 +13,7 @@ import {
 import EditIcon from "@material-ui/icons/Edit";
 import { createStandaloneToast } from "@chakra-ui/react";
 import axios from "axios";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 let theme = createMuiTheme();
 theme.typography.h6 = {
@@ -179,15 +179,20 @@ export default function Profile() {
       try {
         empId = localStorage.getItem("emPID");
       } catch (error) {
-        history.push("/")
+        history.push("/");
       }
+
       await axios
         .get(`http://localhost:8000/employee_info/`, {
-          params: {
-            employee_id: empId,
-          },
+          params: { employee_id: empId },
         })
-        .then((response) => setUserInfo(response.data));
+        .then((response) => {
+          if (response.data) {
+            setUserInfo(response.data);
+          } else {
+            setUserInfo(defaultUserInfo);
+          }
+        });
     };
 
     retrieveUser();
@@ -211,13 +216,13 @@ export default function Profile() {
       lastname: userInfo.lastname,
       email: userInfo.email,
       phone: userInfo.phone,
-      designation: userInfo.designation
+      designation: userInfo.designation,
     };
     console.log(params);
 
     await axios
       .post(`http://localhost:8000/update_employee_info`, null, {
-        params: params
+        params: params,
       })
       .then(() => {
         toast({
