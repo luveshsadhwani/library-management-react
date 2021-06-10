@@ -9,7 +9,7 @@ import Location from "../../container/Location";
 import AddEntry from "../../container/functionalitycomp/AddEntry";
 import EditBookFormik from "../Forms/EditBookFormik";
 import View from "../View/View";
-import IssueForm from "../Forms/IssueForm";
+import IssueFormFormik from "../Forms/IssueFormFormik";
 
 export default function AppNavigator() {
   let match = useRouteMatch().url;
@@ -24,7 +24,7 @@ export default function AppNavigator() {
       <Route path={`${match}/add`} component={AddEntry} exact />
       <Route path={`${match}/edit/:id`} component={EditBookFormik} exact />
       <Route path={`${match}/view/:isbn`} component={View} exact />
-      <Route path={`${match}/issue/:id`} component={IssueForm} exact />
+      <Route path={`${match}/issue/:id`} component={IssueFormFormik} exact />
     </Switch>
   );
 }
