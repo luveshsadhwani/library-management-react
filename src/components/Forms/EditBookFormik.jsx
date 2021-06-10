@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { createStandaloneToast } from "@chakra-ui/react";
 import { Formik, Form, Field, useField, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -23,7 +23,7 @@ const TextField = ({ label, ...props }) => {
 function EditPresentational(props) {
   // Formik keeps tracks of form values, so we won't have useState here, take in the state from the parent. These will map out the keys and values for each textfield we have through the name prop
   const { bookInfo } = props;
-
+  const history = useHistory()
   // Yup can validate for different types of data. Here we validate a string that matches a regex so that we don't get numbers. I've written it separately to make it neater. I allowed numbers for the booktitle, but not author, publisher or subject
   const textValidation = Yup.string().matches(
     /^[a-zA-Z ]+$/,
@@ -64,13 +64,14 @@ function EditPresentational(props) {
       .then(() => {
         toast({
           title: `Successfully editted ${values.booktitle}`,
-          description: `Author: ${values.authorname}, ISBN: ${values.isbn}`,
+          description: `Author: ${values.authorname}, ISBN: ${values.Isbn}`,
           status: "success",
           variant: "solid",
           duration: 1500,
           position: "top-right",
           isClosable: false,
         });
+        history.goBack();
       })
       .catch((err) => {
         toast({
