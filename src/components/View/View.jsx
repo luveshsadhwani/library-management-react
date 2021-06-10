@@ -52,10 +52,14 @@ function View() {
 //https://openlibrary.org/api/books?bibkeys=ISBN:${isbnnumber}&jscmd=details&format=json
     const lib_api = async()=>{
         const result_dat = await axios.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=details&format=json`)
-        
-        setBookname(result_dat.data[`ISBN:${isbn}`].details.title)
-        setAuthor(result_dat.data[`ISBN:${isbn}`].details.authors[0].name)
-        console.log(result_dat.data[`ISBN:${isbn}`].details)
+        try {
+          setBookname(result_dat.data[`ISBN:${isbn}`].details.title)
+          setAuthor(result_dat.data[`ISBN:${isbn}`].details.authors[0].name)
+        } catch (error) {
+          setBookname("ERROR")
+          setAuthor("ERROR")
+        }
+
         try {
             setFirstsentence(result_dat.data[`ISBN:${isbn}`].details.first_sentence.value);
           }
