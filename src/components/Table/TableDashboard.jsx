@@ -123,10 +123,24 @@ const TableContent = (props) => {
   const renderRow = (rowObj, rowIndex, headers) => {
     const id = rowObj["id"];
     const isbn = rowObj["Isbn"];
+    const issued = rowObj["issued"];
     return (
       <TableRow key={`row${rowIndex}`}>
         {headers.map((column, columnIndex) => (
-          <TableCell key={`col${columnIndex}`}>{rowObj[column.prop]}</TableCell>
+          <TableCell key={`col${columnIndex}`}>
+            {<div>{rowObj[column.prop]}</div>}
+            {columnIndex === 2 && issued ? (
+              <div
+                style={{
+                  fontSize: "12px",
+                  background: "green",
+                  color: "white",
+                  padding: "5px",
+                  width: "40%",
+                }}
+              >{`Issued to ${issued}`}</div>
+            ) : null}
+          </TableCell>
         ))}
         {actionButtons && <ActionButtons id={id} isbn={isbn} />}
       </TableRow>
