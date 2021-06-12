@@ -59,6 +59,14 @@ export default function Dashboard() {
       name: "ISBN",
       prop: "Isbn",
     },
+    {
+      name:"Issued Date",
+      prop:"issued_date",
+    },
+    {
+      name:"Return Date",
+      prop:"return_date"
+    }
   ];
 
   return (
