@@ -49,16 +49,18 @@ function IssuePresentational(props) {
     issued: Yup.string()
       .matches(/^#\d{4}$/, "Enter # followed by the 4 digit ID")
       .required("Required"),
-    date_of_issue: Yup.string()
-        .matches(/^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/,
-          "Date Must Be in Format dd/mm/yy"
-        )
-        .required("Required"),
-    date_of_return: Yup.string()
-      .matches(/^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/,
+    issued_date: Yup.string()
+      .matches(
+        /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/,
         "Date Must Be in Format dd/mm/yy"
       )
-      .required("Required"),   
+      .required("Required"),
+    return_date: Yup.string()
+      .matches(
+        /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/,
+        "Date Must Be in Format dd/mm/yy"
+      )
+      .required("Required"),
   });
 
   const submit_entry = async (values) => {
@@ -66,8 +68,8 @@ function IssuePresentational(props) {
 
     //// CONNECTION TO THE CUSTOM API GOES HERE USE AXIOS TO SENT POST REQ
     let params = values.issued;
-    let date_ofreturn = values.date_of_return
-    let date_ofissue = values.date_of_issue
+    let date_ofreturn = values.return_date;
+    let date_ofissue = values.date_of_issue;
 
     setIsSubmitted(true);
 
@@ -77,7 +79,7 @@ function IssuePresentational(props) {
         params: {
           entry_id: values.id,
           data_to_push: params,
-          date_of_issue: date_ofreturn,
+          date_of_issue: date_ofissue,
           return_date: date_ofreturn,
         },
       })
@@ -155,12 +157,12 @@ function IssuePresentational(props) {
                 placeholder="Enter Student ID"
               />
               <TextField
-                name="date_of_issue"
+                name="issued_date"
                 label="Date of Issue"
                 placeholder="dd/mm/yy"
               />
               <TextField
-                name="date_of_return"
+                name="return_date"
                 label="Date of Return"
                 placeholder="dd/mm/yy"
               />
@@ -187,8 +189,11 @@ export default function IssueBookFormik() {
     Publisher: "",
     Isbn: "",
     issued: "",
+    issued_date: "",
+    return_date: "",
   };
   const [bookInfo, setBookInfo] = useState(defaultBookInfoState);
+  console.log(bookInfo);
 
   useEffect(() => {
     const toast = createStandaloneToast();
