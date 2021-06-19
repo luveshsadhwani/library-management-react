@@ -46,7 +46,7 @@ const TableContent = (props) => {
   const toast = createStandaloneToast();
 
   // THIS IS WHERE WE DELETE DATA FROM OUR API
-  const ActionButtons = ({ id, isbn }) => {
+  const ActionButtons = ({ id, isbn, issued }) => {
     const deletebook = async (id) => {
       await axios
         .post(`http://localhost:8000/deleteentry`, null, {
@@ -88,12 +88,12 @@ const TableContent = (props) => {
         >
           <DeleteOutlineIcon />
         </button>
-        <Link
+        {!issued && <Link
           to={`/home/issue/${id}`}
           className="btn btn-outline-primary mr2 mt2"
         >
           <EventSeatRoundedIcon />
-        </Link>
+        </Link>}
       </TableCell>
     );
   };
@@ -142,7 +142,7 @@ const TableContent = (props) => {
             ) : null}
           </TableCell>
         ))}
-        {actionButtons && <ActionButtons id={id} isbn={isbn} />}
+        {actionButtons && <ActionButtons id={id} isbn={isbn} issued={issued} />}
       </TableRow>
     );
   };

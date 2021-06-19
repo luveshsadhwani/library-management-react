@@ -22,6 +22,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import EditIcon from "@material-ui/icons/Edit";
+import { Link } from "react-router-dom";
 
 // Pass custom headers as JSX children
 
@@ -78,6 +80,12 @@ const TableContent = (props) => {
 
     return (
       <TableCell key={`btns-${id}`}>
+        <Link
+          className="btn btn-outline-primary mr2 mt2"
+          to={`/home/issue/${id}`}
+        >
+          <EditIcon />
+        </Link>
         <Button
           variant="contained" color="secondary"
           onClick={() => setOpen(true)}
