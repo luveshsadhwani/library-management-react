@@ -4,6 +4,8 @@ import { Formik, Form, useField, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { createStandaloneToast } from "@chakra-ui/react";
+import { useHistory } from "react-router";
+
 
 const TextField = ({ label, ...props }) => {
   const [field] = useField(props);
@@ -24,6 +26,8 @@ const TextField = ({ label, ...props }) => {
 export default function EditProfileForm(props) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { userInfo, handleClose } = props;
+  const history = useHistory();
+
 
   const textValidation = Yup.string().matches(
     /^[a-zA-Z. ]+$/,
@@ -69,11 +73,14 @@ export default function EditProfileForm(props) {
           description: `ID: ${values.empid}`,
           status: "success",
           variant: "solid",
-          duration: 3000,
+          duration: 2000,
           position: "top-right",
           isClosable: false,
         });
         handleClose();
+        setInterval(() => {
+          history.go(0);
+        }, 2000);
       })
       .catch((err) => {
         toast({
@@ -85,6 +92,7 @@ export default function EditProfileForm(props) {
           position: "top-right",
           isClosable: false,
         });
+        setIsSubmitted(false);
       });
   };
 

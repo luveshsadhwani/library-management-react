@@ -89,11 +89,13 @@ function IssuePresentational(props) {
           description: `Successfully Issued ${values.booktitle} by ${values.authorname} to ${params}`,
           status: "success",
           variant: "solid",
-          duration: 1500,
+          duration: 2000,
           position: "top-right",
           isClosable: false,
         });
-        history.goBack();
+        setInterval(() => {
+          history.go(0);
+        }, 2000);
       })
       .catch((err) => {
         toast({
@@ -105,6 +107,7 @@ function IssuePresentational(props) {
           position: "top-right",
           isClosable: false,
         });
+        setIsSubmitted(false);
       });
   };
 

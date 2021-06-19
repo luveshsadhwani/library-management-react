@@ -13,7 +13,10 @@ const TextField = ({ label, ...props }) => {
         {label}
       </label>
       <Field name={field.name} {...props} />
-      <ErrorMessage name={field.name} render={msg => <div style={{ color: 'red' }}>{msg}</div>}/>
+      <ErrorMessage
+        name={field.name}
+        render={(msg) => <div style={{ color: "red" }}>{msg}</div>}
+      />
     </div>
   );
 };
@@ -24,7 +27,7 @@ function EditPresentational(props) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   // Formik keeps tracks of form values, so we won't have useState here, take in the state from the parent. These will map out the keys and values for each textfield we have through the name prop
   const { bookInfo } = props;
-  const history = useHistory()
+  const history = useHistory();
   // Yup can validate for different types of data. Here we validate a string that matches a regex so that we don't get numbers. I've written it separately to make it neater. I allowed numbers for the booktitle, but not author, publisher or subject
   const textValidation = Yup.string().matches(
     /^[a-zA-Z. ]+$/,
@@ -49,14 +52,14 @@ function EditPresentational(props) {
     const toast = createStandaloneToast();
     //// CONNECTION TO THE CUSTOM API GOES HERE USE AXIOS TO SENT POST REQ
     let params = {
-        id: values.id,
-        booktitle: values.booktitle,
-        authorname: values.authorname,
-        publisher: values.Publisher,
-        subject: values.Subject,
-        isbn: values.Isbn,
-      };
-    
+      id: values.id,
+      booktitle: values.booktitle,
+      authorname: values.authorname,
+      publisher: values.Publisher,
+      subject: values.Subject,
+      isbn: values.Isbn,
+    };
+
     setIsSubmitted(true);
 
     // UPDATE WHERE ID
@@ -70,11 +73,13 @@ function EditPresentational(props) {
           description: `Author: ${values.authorname}, ISBN: ${values.Isbn}`,
           status: "success",
           variant: "solid",
-          duration: 1500,
+          duration: 2000,
           position: "top-right",
           isClosable: false,
         });
-        history.goBack();
+        setInterval(() => {
+          history.go(0);
+        }, 2000);
       })
       .catch((err) => {
         toast({
@@ -86,6 +91,7 @@ function EditPresentational(props) {
           position: "top-right",
           isClosable: false,
         });
+        setIsSubmitted(false);
       });
   };
 
@@ -125,7 +131,7 @@ function EditPresentational(props) {
               />
             </div>
             <div className="button">
-              <input type="submit" value="Edit" disabled={isSubmitted}/>
+              <input type="submit" value="Edit" disabled={isSubmitted} />
             </div>
           </Form>
         </Formik>
@@ -136,8 +142,8 @@ function EditPresentational(props) {
 
 export default function EditBookFormik() {
   // I've run our get request separately here so the actual form will only be in charge of displaying and submitting ata
-  
-    const { id } = useParams();
+
+  const { id } = useParams();
   const defaultBookInfoState = {
     id: id,
     authorname: "",
