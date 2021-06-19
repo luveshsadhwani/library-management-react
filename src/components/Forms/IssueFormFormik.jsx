@@ -69,7 +69,7 @@ function IssuePresentational(props) {
     //// CONNECTION TO THE CUSTOM API GOES HERE USE AXIOS TO SENT POST REQ
     let params = values.issued;
     let date_ofreturn = values.return_date;
-    let date_ofissue = values.date_of_issue;
+    let date_ofissue = values.issued_date;
 
     setIsSubmitted(true);
 
