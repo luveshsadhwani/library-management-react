@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Formik, Form, useField, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -22,6 +22,7 @@ const TextField = ({ label, ...props }) => {
 };
 
 export default function EditProfileForm(props) {
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const { userInfo, handleClose } = props;
 
   const textValidation = Yup.string().matches(
@@ -54,6 +55,8 @@ export default function EditProfileForm(props) {
       phone: values.phone,
       designation: values.designation,
     };
+
+    setIsSubmitted(true);
 
     // UPDATE WHERE ID
     await axios
@@ -126,10 +129,10 @@ export default function EditProfileForm(props) {
             </div>
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <div className="buttonclose" style={{ width: "40%" }}>
-                <input type="submit" value="Cancel" onClick={handleClose}/>
+                <input type="submit" value="Cancel" onClick={handleClose} />
               </div>
               <div className="button" style={{ width: "40%" }}>
-                <input type="submit" value="Edit" />
+                <input type="submit" value="Edit" disabled={isSubmitted}/>
               </div>
             </div>
           </Form>

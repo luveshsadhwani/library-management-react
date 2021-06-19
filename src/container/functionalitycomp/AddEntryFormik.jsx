@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "./addentry.css";
 import { createStandaloneToast } from "@chakra-ui/react";
@@ -24,7 +24,7 @@ const TextField = ({ label, ...props }) => {
 // check if staff have a specific email, we can use regex to match this
 //check phone number format
 function AddPresentational(props) {
-
+  const [isSubmitted, setIsSubmitted] = useState(false);
   // Formik keeps tracks of form values, so we won't have useState here, take in the state from the parent. These will map out the keys and values for each textfield we have through the name prop
   const { bookInfo } = props;
 
@@ -49,7 +49,7 @@ function AddPresentational(props) {
   });
 
   const submit_entry = async (values, actions) => {
-    setTimeout(actions.resetForm, 1000) ;
+    setTimeout(actions.resetForm, 1000);
     const toast = createStandaloneToast();
     //// CONNECTION TO THE CUSTOM API GOES HERE USE AXIOS TO SENT POST REQ
     let params = {
@@ -60,6 +60,8 @@ function AddPresentational(props) {
       isbn: values.Isbn,
       issued_data: "",
     };
+
+    setIsSubmitted(true);
 
     // UPDATE WHERE ID
     await axios
@@ -125,7 +127,7 @@ function AddPresentational(props) {
               />
             </div>
             <div className="button">
-              <input type="submit" value="Add Entry" />
+              <input type="submit" value="Add Entry" disabled={isSubmitted}/>
             </div>
           </Form>
         </Formik>

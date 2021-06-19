@@ -24,6 +24,7 @@ const TextField = ({ label, ...props }) => {
 // check if staff have a specific email, we can use regex to match this
 //check phone number format
 function IssuePresentational(props) {
+  const [isSubmitted, setIsSubmitted] = useState(false);
   // Formik keeps tracks of form values, so we won't have useState here, take in the state from the parent. These will map out the keys and values for each textfield we have through the name prop
   const { bookInfo } = props;
   const history = useHistory();
@@ -68,8 +69,7 @@ function IssuePresentational(props) {
     let date_ofreturn = values.date_of_return
     let date_ofissue = values.date_of_issue
 
-    console.log(date_ofissue)
-    console.log(date_ofreturn)
+    setIsSubmitted(true);
 
     // UPDATE WHERE ID
     await axios
@@ -166,7 +166,7 @@ function IssuePresentational(props) {
               />
             </div>
             <div className="button">
-              <input type="submit" value="IssueBook" />
+              <input type="submit" value="IssueBook" disabled={isSubmitted} />
             </div>
           </Form>
         </Formik>
